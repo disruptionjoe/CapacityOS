@@ -1,0 +1,30 @@
+# ===== Personal data — never push to public repo =====
+
+# Flow: ignore personal files but keep folder structure via .gitkeep
+Flow/inbox/*
+!Flow/inbox/.gitkeep
+Flow/actions/*
+!Flow/actions/.gitkeep
+Flow/archive/*
+!Flow/archive/.gitkeep
+Flow/intake/*
+!Flow/intake/.gitkeep
+
+# Alignment: keep only the _domain-template for the public repo
+Alignment/*/
+!Alignment/_domain-template/
+
+# ===== System — DO push to GitHub =====
+# (nothing ignored here — System/ is the open-source core)
+
+# ===== Build artifacts =====
+System/scripts/__pycache__/
+System/scripts/indexes/
+
+# ===== OS / editor junk =====
+.DS_Store
+Thumbs.db
+.obsidian/
+*.swp
+*.swo
+*~
