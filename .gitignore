@@ -21,6 +21,9 @@ Alignment/*/
 System/scripts/__pycache__/
 System/scripts/indexes/
 
+# ===== Attachments (Obsidian images, files, etc.) =====
+_attachments/
+
 # ===== OS / editor junk =====
 .DS_Store
 Thumbs.db
