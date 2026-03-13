@@ -2,7 +2,7 @@
 
 A personal operating system that helps you think clearly about what matters and what to do next.
 
-CapacityOS works with an AI agent (like Claude) to keep track of your tasks, decisions, and the big areas of your life. You tell it what you care about. It organizes everything into a dashboard that shows you exactly what needs your attention right now — nothing more.
+CapacityOS works with an AI agent (like Claude Cowork) to keep track of your tasks, decisions, and the big areas of your life. You tell it what you care about. It organizes everything into a dashboard that shows you exactly what needs your attention right now — nothing more.
 
 ---
 
