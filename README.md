@@ -136,6 +136,25 @@ This file isn't included by default because most people won't need it right away
 
 ---
 
+## Recommended: Install the CapacityOS plugin
+
+CapacityOS works out of the box — just open the folder in any AI tool and the agent reads the skills from `System/skills/`. But if you're using Claude Cowork, installing the plugin gives you faster triggering, better context management, and a smoother experience.
+
+The plugin includes four skills that handle the most common interactions: the dashboard, inbox capture, triage, and routing. Everything else loads from the repo on demand.
+
+**To install:** Download the `.skill` files from the [latest release](https://github.com/disruptionjoe/CapacityOS/releases) and double-click each one to install in Cowork. Install order: `capacityos-router` first, then the others in any order.
+
+| Skill file | What it does |
+|------------|-------------|
+| `capacityos-router.skill` | Routes requests to the right skill (plugin or repo) |
+| `capacityos-dashboard.skill` | Renders your priority board on session start |
+| `capacityos-capture.skill` | Quick-captures ideas, tasks, and brain dumps to inbox |
+| `capacityos-triage.skill` | Processes inbox items into actions or improvements |
+
+The plugin is optional — the repo works standalone for any AI tool. The plugin just optimizes the hot paths for Cowork.
+
+---
+
 ## For developers and forkers
 
 CapacityOS is designed to be forked, customized, and extended. Here's where to start:

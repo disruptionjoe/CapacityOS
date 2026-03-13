@@ -60,34 +60,59 @@ For each item in Flow/actions/ with status ≠ done|declined|rejected:
 
 ### Phase 3: Render Board
 
+Use proper markdown headings and bullet points for clear visual hierarchy. Each item gets an **action verb** so the operator knows what to DO with it: "Decide", "Do", "Review", "Plan".
+
+Action verb rules:
+- `requires_approval=true` AND `status=review` → **Decide**
+- `status=active` or `status=wip` → **Do**
+- `status=review` (non-approval) → **Review**
+- `status=new` or `status=open` → **Do** (default)
+- `status=proposed` → **Review**
+- `status=deferred` → **Plan**
+- IMP files → **Review**
+
+Each item is a bullet with a clickable Obsidian link to the file.
+
+```markdown
+**Start here →** {CCF_directive — one sentence, what to do right now}
+
+### Awaiting Your Decision
+- [D1] **Decide:** [ACT-{slug}](Flow/actions/ACT-{slug}.md) — {title}
+- [D2] **Decide:** [ACT-{slug}](Flow/actions/ACT-{slug}.md) — {title}
+
+### Work
+*In Motion:*
+- [W1] **Do:** [ACT-{slug}](Flow/actions/ACT-{slug}.md) — {title}
+- [W2] **Do:** [ACT-{slug}](Flow/actions/ACT-{slug}.md) — {title}
+
+*Next:*
+- [W3] **Do:** [ACT-{slug}](Flow/actions/ACT-{slug}.md) — {title}
+
+### Life Improvements
+*In Motion:*
+- [L1] **Do:** [ACT-{slug}](Flow/actions/ACT-{slug}.md) — {title}
+
+### System
+- [S1] **Review:** [IMP-{slug}](System/improvements/IMP-{slug}.md) — {title}
+
+### Coaching
+**Containment:** {1-2 sentence coaching about structure and stabilization — unresolved decisions, uncontained risks, things needing boundaries. Containment is FIRST because without it, nothing else holds.}
+
+**Coherence:** {1-2 sentence coaching about alignment — are active items across domains working together or pulling apart? Coherence is SECOND because scattered effort dilutes impact.}
+
+**Flow:** {1-2 sentence coaching about execution — what can move right now? What's the smallest next step? Flow is THIRD because when containment and coherence are in place, execution builds a better life.}
+
+### Calendar (optional)
+{if any items have due_date, list next 3 upcoming}
 ```
-Board: {trust_level} | {total_item_count} items across {domain_count} domains
 
-Start here → {CCF_directive}
-
-── Awaiting Your Decision ──
-  {list of requires_approval=true items with status=review, format: [D{N}] [ACT-{slug}](Flow/actions/ACT-{slug}.md) (review) — {title}}
-
-── {Domain Name} ──
-  In Motion: [P{N}] [ACT-{slug}](Flow/actions/ACT-{slug}.md) ({status}) — {title}
-  Next: [P{N}] [ACT-{slug}](Flow/actions/ACT-{slug}.md) ({status}) — {title}
-  On Deck: [P{N}] [ACT-{slug}](Flow/actions/ACT-{slug}.md) (proposed) — {title}
-
-{repeat for each domain}
-
-── System ──
-  {items with type=IMP, format: [S{N}] [IMP-{slug}](System/improvements/IMP-{slug}.md) ({status}) — {title}}
-
-── Coaching ──
-Containment Coach: {1-2 sentence coaching message about structure and stabilization — are there unresolved decisions, uncontained risks, or things that need boundaries before anything else can move? Containment is the first priority because without it, nothing else holds.}
-
-Coherence Coach: {1-2 sentence coaching message about alignment — are the active items across domains working toward a unified direction, or are they pulling in different directions? Coherence is the second priority because scattered effort dilutes impact.}
-
-Flow Coach: {1-2 sentence coaching message about execution — given what's contained and coherent, what can move forward right now? Flow is the third priority because when containment and coherence are in place, execution becomes a better life instead of many disjointed things.}
-
-── Calendar (optional) ──
-{if any items have due_date, list next 3 upcoming due_dates with item titles}
-```
+Key formatting rules:
+- **No summary line before "Start here"** — "Start here" IS the top of the board, nothing above it
+- Section headings use `###` markdown headings
+- Items are bulleted with `- [ID] **Verb:** [linked filename](path) — title`
+- Action verbs are bolded so they pop visually
+- Sub-sections within a domain (In Motion, Next, On Deck) use italic labels
+- Links use Obsidian-compatible relative paths
 
 4. **Quick-action shorthand** (footer)
    - `A1 done` → mark item A1 as done
@@ -107,17 +132,20 @@ Flow Coach: {1-2 sentence coaching message about execution — given what's cont
 6. **No preamble, no postamble** — the board IS the greeting. Output only the formatted board.
 
 ## Output Format
-```
-Board: {TRUST_LEVEL} | {ITEM_COUNT} items across {DOMAIN_COUNT} domains
+```markdown
+**Start here →** {CCF_DIRECTIVE}
 
-Start here → {CCF_DIRECTIVE}
+### Awaiting Your Decision
+- [D1] **Decide:** [ACT-{slug}](path) — {title}
 
-{domain sections as specified above}
+### {Domain Name}
+*In Motion:*
+- [W1] **Do:** [ACT-{slug}](path) — {title}
 
-── Coaching ──
-Containment Coach: {contextual advice}
-Coherence Coach: {contextual advice}
-Flow Coach: {contextual advice}
+### Coaching
+**Containment:** {contextual advice}
+**Coherence:** {contextual advice}
+**Flow:** {contextual advice}
 ```
 
 ## Coaching Guidelines
