@@ -9,7 +9,7 @@ title: ""                      # Short descriptive title
 slug: ""                       # lowercase-kebab-case (must match filename)
 created_at: ""                 # YYYY-MM-DD
 updated_at: ""                 # YYYY-MM-DD
-alignment_domain: ""           # Name of an Alignment domain (e.g. "Career", "Health"), or leave empty for General
+workstream: ""                 # Workstream ID from Alignment/system1_workstreams.json, or leave empty
 requires_approval: false       # Set to true if this needs human sign-off before execution
 action_description: ""         # What should happen
 done_condition: ""             # How do we know it's done? Be specific.

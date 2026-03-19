@@ -1,6 +1,6 @@
 # CapacityOS — Agent Operating Manual
 
-CapacityOS is a skill-based personal operating system organized into three nested layers: System, Flow, and Alignment. It helps an operator think clearly about what matters and what to do next by processing action items through a governed pipeline and grounding them in durable life/work domains.
+CapacityOS is a skill-based personal operating system organized into three nested layers: System, Flow, and Alignment. It helps an operator think clearly about what matters and what to do next by processing action items through a governed pipeline and grounding them in workstreams organized by Stafford Beer's Viable System Model.
 
 This file is the agent's primary operating manual. It should be loaded at the start of every session.
 
@@ -12,12 +12,12 @@ This file is the agent's primary operating manual. It should be loaded at the st
 CapacityOS/
 ├── System/    → The operating system (skills, agents, schemas, governance, scripts)
 ├── Flow/      → The processing pipeline (intake → inbox → actions → archive)
-└── Alignment/ → The life map (one folder per domain, organized by VSM - Stafford Beer's Viable Systems Model)
+└── Alignment/ → System identity & workstreams (flat folder, VSM-structured)
 ```
 
 **System** is the reusable logic. It changes rarely and requires governed mutation.
 **Flow** is the ephemeral pipeline. Items move through it and get archived.
-**Alignment** is durable state. It represents the major areas of the operator's life or work and changes slowly.
+**Alignment** is durable state. It defines the system's purpose, strategy, coordination, and workstreams. Workstreams are the atomic unit of organization — there are no "domains" or subfolders.
 
 ---
 
@@ -37,9 +37,9 @@ These rules are non-negotiable:
 On every new session:
 
 1. Read this file (AGENT.md)
-2. Check if `Alignment/` has any domain folders (subdirectories besides `_domain-template`)
-   - **If no domains exist:** Invoke `SKL-onboard-new-user` — this is the first-run guided setup
-   - **If domains exist:** Invoke `SKL-surface-dashboard` — render the board immediately
+2. Check if `Alignment/system1_workstreams.json` exists and has workstreams
+   - **If no workstreams exist:** Invoke `SKL-onboard-new-user` — this is the first-run guided setup
+   - **If workstreams exist:** Invoke `SKL-surface-dashboard` — render the board immediately
 3. The board IS the greeting. No preamble, no "how can I help you today." Just the board.
 
 ---
@@ -51,9 +51,9 @@ To manage token efficiency, load context in layers:
 | Tier | When loaded | What |
 |------|-------------|------|
 | **Always** | Every session | This file (AGENT.md) |
-| **On greeting** | Session start | `SKL-surface-dashboard` procedure, `alignment-index.json`, `ops-index.json` |
+| **On greeting** | Session start | `SKL-surface-dashboard` procedure, `alignment-index.json`, `ops-index.json`, `system1_workstreams.json` |
 | **On task** | When executing a skill | The relevant `SKL-*.md` file + `SYS-schema-enums-registry.md` (for validation) |
-| **On demand** | When specifically needed | Individual Alignment domain files, agent persona files, archive manifests |
+| **On demand** | When specifically needed | Individual Alignment system files (system2-5), agent persona files, archive manifests |
 | **Never auto-load** | Only if explicitly requested | Archive file contents, completed pipeline items, full governance docs |
 
 Prefer indexes (`System/scripts/indexes/*.json`) over scanning directories. Indexes are compact and designed for agent consumption. Fall back to directory scanning only if indexes are stale or missing.
@@ -97,26 +97,23 @@ Key rules:
 
 ---
 
-## 7. Alignment Domains
+## 7. Alignment — System Identity & Workstreams
 
-Each subdirectory of `Alignment/` (except `_domain-template`) is a domain — a major area of the operator's life or work.
-
-Each domain contains files organized by Stafford Beer's **Viable System Model (VSM)**:
+Alignment is a **flat folder** (no subfolders) organized by Stafford Beer's Viable System Model (VSM):
 
 | File | VSM System | What it captures |
 |------|-----------|------------------|
-| `system5_purpose.md` | S5 — Identity | Why this domain exists, what success looks like |
-| `system4_strategy.md` | S4 — Intelligence | Strategic direction, bets, hypotheses |
-| `system3_optimization.md` | S3 — Control | Metrics, cadences, health signals |
-| `system2_coordination.md` | S2 — Coordination | Interfaces with other domains, agreements |
-| `system1_workstreams.md` | S1 — Operations | Active workstreams, current focus |
-| `system_rules.md` _(optional)_ | — | Domain-specific operating rules for the agent |
+| `system5_purpose.md` | S5 — Identity | Why the system exists, what success looks like |
+| `system4_intelligence.md` | S4 — Intelligence | Strategic direction, adaptation signals, key bets |
+| `system3_optimization.md` | S3 — Control | CCF scoring logic, health signals, review cadence |
+| `system2_coordination.md` | S2 — Coordination | Cross-workstream tensions, conflict resolution, dependencies |
+| `system1_workstreams.json` | S1 — Operations | Active workstreams — the atomic unit of organization |
 
-The numbering goes S5→S1 because the model works from abstract (identity, purpose) to concrete (active workstreams). You always define purpose first — everything else flows from it.
+The numbering goes S5→S1 because the model works from abstract (identity, purpose) to concrete (active workstreams). Purpose is defined first — everything else flows from it.
 
-**The `alignment_domain` field** on ACT and IMP files links flow items to domains. The dashboard groups items by domain automatically.
+**The `workstream` field** on ACT and IMP files links flow items to workstreams. The dashboard groups items by workstream automatically.
 
-**Alignment files are exempt from triple-redundancy.** They are validated by: valid domain folder, expected filename, required YAML fields.
+**There are no "domains" or domain subfolders.** Workstreams are flat — "career-development", "health", "finances" are all peers. Grouping is optional and handled by the dashboard if needed.
 
 ---
 
@@ -126,7 +123,7 @@ All internal path references must be **relative to `CapacityOS/`** as root.
 
 Correct: `System/skills/SKL-surface-dashboard.md`
 Correct: `Flow/actions/ACT-deploy-website.md`
-Correct: `Alignment/Career/system5_purpose.md`
+Correct: `Alignment/system1_workstreams.json`
 
 Incorrect: `/meta/SKL-surface-dashboard.md` (flat-path assumption)
 Incorrect: `/sessions/.../CapacityOS/...` (absolute VM path)
@@ -148,7 +145,7 @@ All three must agree. If any check fails → route to `SKL-repair-file`. Never s
 
 **ALL files use their three-letter type prefix in their filename** (e.g., `SKL-`, `AGT-`, `SYS-`, `TPL-`, `ACT-`, `IBX-`, `IMP-`). This is intentionally redundant with both the folder structure and the YAML `type` field. The redundancy improves agent determinism: an agent can identify a file's type from any single signal — filename, folder, or YAML — without needing to load or parse context.
 
-**Exceptions:** `AGENT.md` and `README.md` (root-level convention files). Alignment domain files use VSM numbering (`system5_purpose.md`, etc.) because they are user-authored state, exempt from triple-redundancy.
+**Exceptions:** `AGENT.md` and `README.md` (root-level convention files). Alignment files use VSM numbering (`system5_purpose.md`, etc.) because they are system-level configuration, exempt from triple-redundancy.
 
 ---
 
@@ -199,8 +196,6 @@ Quick reference — pre-write checks (PW-01 through PW-13) must all pass before 
 | Quick-action shorthand (A1 done, D2 approve) | `surface-dashboard` |
 | "create a task", "I need to..." | `create-act` |
 | "approve/decline/defer" on a pending item | `resolve-approval` |
-| "set up a new domain" | `create-domain` |
-| (first session, no domains) | `onboard-new-user` |
 | "triage inbox", "what's new" | `triage-ibx` |
 | "archive this" | `archive-item` |
 | "system health", "improvements" | `generate-improvements` |

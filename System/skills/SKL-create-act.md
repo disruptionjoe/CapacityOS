@@ -5,7 +5,7 @@ root: System/skills
 title: "Create ACT"
 slug: create-act
 skill_id: create-act
-allowed_inputs: ["title", "action_description", "done_condition", "alignment_domain", "requires_approval"]
+allowed_inputs: ["title", "action_description", "done_condition", "workstream", "requires_approval"]
 expected_outputs: ["act_file_created"]
 target_types: []
 canon_mutation_allowed: false
@@ -33,7 +33,7 @@ Required:
 - **done_condition** (string, describes success criteria)
 
 Optional:
-- **alignment_domain** (string, must match folder in Alignment/; default null)
+- **workstream** (string, must match entry in Alignment/system1_workstreams.json; default null)
 - **requires_approval** (boolean, default false)
 - **priority** (enum: low, medium, high; default medium)
 - **due_date** (ISO 8601 date; default null)
@@ -51,9 +51,9 @@ Optional:
    - Non-empty
    - If invalid, reject: "Done condition must describe success criteria"
 
-4. **alignment_domain validation:**
-   - If provided, check that Alignment/{alignment_domain}/ exists
-   - If directory does not exist, warn: "Domain '{domain}' not found; setting to null"
+4. **workstream validation:**
+   - If provided, check that workstream exists in Alignment/system1_workstreams.json
+   - If workstream does not exist, warn: "Workstream '{workstream}' not found; setting to null"
    - Set to null if invalid
 
 5. **requires_approval validation:**
@@ -97,7 +97,7 @@ slug: {slug}
 action_description: |
   {action_description}
 done_condition: "{done_condition}"
-alignment_domain: {alignment_domain or null}
+workstream: {workstream or null}
 priority: {priority}
 due_date: {due_date or null}
 requires_approval: {requires_approval}
@@ -125,7 +125,7 @@ tags: []
 ### Step 7: Log Event
 1. Append to System/logs/create-act.log:
    ```
-   [timestamp] ACT created: {slug} (status: {status}, domain: {domain}, approval_required: {requires_approval})
+   [timestamp] ACT created: {slug} (status: {status}, workstream: {workstream}, approval_required: {requires_approval})
    ```
 
 ## Output Format
@@ -134,14 +134,14 @@ ACT created: {slug}
 Location: Flow/actions/ACT-{slug}.md
 Status: {status}
 Title: {title}
-Alignment Domain: {alignment_domain or "General"}
+Workstream: {workstream or "Unassigned"}
 Approval Required: {requires_approval}
 Created: {created_at}
 ```
 
 ## Error Handling
 - **Missing required fields**: Reject with specific field name
-- **Invalid alignment_domain**: Warn and set to null; continue
+- **Invalid workstream**: Warn and set to null; continue
 - **Validation failure**: Report: "ACT does not conform to schema: {reason}"
 - **File I/O error**: Report: "Failed to write ACT file: {system_error}"
 - **Slug collision**: Append UUID suffix

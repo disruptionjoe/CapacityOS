@@ -79,7 +79,7 @@ Required:
    - title = "Repair {filename}: {brief_error}"
    - action_description = {diagnostic_report} (detailed diagnosis)
    - done_condition = "File passes PW validation; verified in System/logs/"
-   - alignment_domain = "System" (or null)
+   - workstream = "system" (or null)
    - requires_approval = true (human review and decision required)
    - priority = "high" (validation failures need attention)
 

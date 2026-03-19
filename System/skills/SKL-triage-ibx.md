@@ -45,10 +45,10 @@ For each IBX with status:new:
    - **INFORMATIONAL**: Reference material, knowledge artifact, or resolved item
      - Indicators: past tense, "learned", "documented", "reference", no action needed
 
-3. **Infer alignment_domain** (if not already set):
-   - Scan title and content for domain keywords (must match a folder in Alignment/)
-   - If match found, set alignment_domain = {domain_name}
-   - Otherwise, leave as null (will be General)
+3. **Infer workstream** (if not already set):
+   - Scan title and content for workstream keywords (must match an entry in Alignment/system1_workstreams.json)
+   - If match found, set workstream = {workstream_id}
+   - Otherwise, leave as null (will be Unassigned)
 
 4. **Proceed per classification:**
 
@@ -56,7 +56,7 @@ For each IBX with status:new:
    - Generate ACT file via SKL-create-act with:
      - title = IBX title
      - action_description = IBX content summary
-     - alignment_domain = {inferred domain or null}
+     - workstream = {inferred workstream or null}
      - requires_approval = false (default; user can escalate manually)
      - done_condition = (extracted from IBX if present, else inferred)
    - Update IBX status to triaged
@@ -67,7 +67,7 @@ For each IBX with status:new:
      - title = IBX title
      - proposal = IBX content
      - status = proposed
-     - alignment_domain = {inferred domain or null}
+     - workstream = {inferred workstream or null}
    - Update IBX status to triaged
    - Link via: `created_from: {imp_slug}`
 
@@ -108,7 +108,7 @@ Archived (informational):
 
 ## Error Handling
 - If Flow/inbox/ does not exist: create it and report "Inbox directory initialized"
-- If alignment_domain inference fails: set to null (will appear in General section)
+- If workstream inference fails: set to null (will appear in Unassigned section)
 - If ACT or IMP creation fails: log error, create diagnostic ACT for manual review, do not update IBX status
 - If IBX file is unreadable: skip it, log error, continue with next
 - If duplicate slug generated: append UUID suffix or timestamp

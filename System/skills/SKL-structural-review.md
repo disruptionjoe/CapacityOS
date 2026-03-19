@@ -43,12 +43,14 @@ Required:
    - If status is "new" or "review", warn: "Proposal may not be mature enough for structural review"
    - Proceed anyway (review can inform refinement)
 
+4. If needed, read Alignment/system1_workstreams.json to understand workstream context
+
 ### Step 2: Set Up Multi-Persona Review
 1. Define three reviewer personas:
 
    **Persona 1: Systems Engineer**
    - Focus: architectural soundness, integration points, scalability
-   - Questions: Does this design fit the VSM hierarchy? Are dependencies explicit? Can it scale?
+   - Questions: Does this design fit the VSM hierarchy? Are workstream dependencies explicit? Can it scale?
 
    **Persona 2: Software Engineer**
    - Focus: implementation feasibility, tech debt, maintainability
@@ -137,7 +139,7 @@ If recommendation is "conditional support", "request revision", or "not recommen
    - title: "Review {proposal_slug}: {recommendation}"
    - action_description: {synthesis document}
    - requires_approval: true (human decision on review findings)
-   - alignment_domain: null or "System" (system-level decision)
+   - workstream: null or "system" (system-level decision)
 
 2. Link review ACT to original proposal:
    - Add field to original proposal: `structural_review_act: {review_act_slug}`

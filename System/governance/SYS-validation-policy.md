@@ -363,9 +363,9 @@ When validation fails at any checkpoint:
 
 ---
 
-## Alignment Domain Files Exception
+## Alignment System Files Exception
 
-**Scope:** Files in `Alignment/[domain]/` folders
+**Scope:** Files in `Alignment/` folder (flat structure)
 
 **Validation model:** Lightweight (not triple-redundancy)
 
@@ -382,7 +382,7 @@ When validation fails at any checkpoint:
 - PW-03: Filename slug match (not strictly enforced)
 - PW-04: Folder match YAML root (not strictly enforced)
 
-**Alignment validation:** Assessed by domain-specific rules defined in `Alignment/[domain]/governance.md`
+**Alignment validation:** Assessed by system-level rules for workstream coordination and alignment files
 
 ---
 

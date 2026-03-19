@@ -37,9 +37,11 @@ Flow/
   archive/            → IBX, ACT, IMP files (immutable)
 
 Alignment/
-  [domain-1]/         → Alignment-specific files (lightweight validation)
-  [domain-2]/
-  ...
+  system1_workstreams.json  → Workstream definitions (flat structure)
+  system2_coordination.md   → Inter-system coordination
+  system3_optimization.md   → System optimization and health
+  system4_strategy.md       → Strategic direction
+  system5_purpose.md        → System purpose and identity
 
 System/
   schemas/            → SYS files (schema definitions)
@@ -113,10 +115,10 @@ System/
 - Authority chain valid (ACTs with `authority_type=approval-granted` must have `authority_ref`)
 - File not in archive (archived files are immutable)
 
-### Lightweight Validation (Alignment Domain Files)
+### Lightweight Validation (Alignment System Files)
 
 **Pre-write:**
-- Valid domain folder (`Alignment/[domain]/`)
+- Valid Alignment/ folder location
 - Expected filename format
 - Required YAML fields present
 
@@ -216,9 +218,10 @@ Find all ACTs needing review: Flow/actions/ACT-*.md with status=review
 Find all completed IMPs: System/improvements/IMP-*.md with status=done
 ```
 
-### By Domain (Alignment)
+### By Workstream (Alignment)
 ```
-Find all alignment files for domain: Alignment/[domain]/*
+Find all workstreams: Alignment/system1_workstreams.json
+Query ACTs by workstream: All ACT files with workstream=[ws-id]
 ```
 
 ### By Authority

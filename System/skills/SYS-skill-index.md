@@ -26,10 +26,10 @@ Master registry of all 17 skills plus this index file.
 | archive-item | Move done/declined/rejected items from Flow/actions/ to Flow/archive/{TYPE}/ | No | No | — | archive, cleanup |
 | repair-file | Diagnose validation failures; create repair ACT; log diagnostics | No | No | — | repair, validation error |
 | governed-mutation | Apply approved changes to System/ or Alignment/ under ACT authority | **Yes** | **Yes** | — | apply mutation, implement change |
-| summarize-alignment | Generate VSM hierarchy overview across all domains; report structure health | No | No | — | alignment, overview, domains |
+| summarize-alignment | Generate VSM hierarchy overview across all workstreams; report structure health | No | No | — | alignment, overview, workstreams |
 | structural-review | Multi-persona (systems-engineer, software-engineer, designer) evaluation of proposals (3 rounds) | No | **Yes** | systems-engineer | review proposal, structural eval |
-| create-domain | Copy Alignment/_domain-template/ to Alignment/{name}/; initialize system5_purpose.md; rebuild index | No | No | — | new domain, create domain |
-| onboard-new-user | Guided first-run: detect empty Alignment/, ask for 1-2 domains, initialize, render dashboard | No | No | — | help me get started, onboard |
+| create-workstream | Edit Alignment/system1_workstreams.json to add a new workstream with purpose and success criteria | No | No | — | new workstream, add workstream |
+| onboard-new-user | Guided first-run: detect empty Alignment/system1_workstreams.json, ask for 1-2 workstreams, initialize, render dashboard | No | No | — | help me get started, onboard |
 | generate-improvements | Technical trio scans system; identifies opportunities; creates up to 3 IMP files (status: proposed) | No | No | systems-engineer | improvements, scan, ideas |
 | execute-improvement | Execute approved IMP step-by-step; update status: approved → executing → done; archive | **Yes** | No | — | execute, implement |
 | review-improvement | Verify completed IMP; check all steps executed; update status: done → reviewed; archive | No | No | — | review improvement |
@@ -69,7 +69,7 @@ Processes IBX files with status:new; classifies and routes.
 - **Key actions:**
   1. For each IBX, classify: ACTION / IMPROVEMENT / INFORMATIONAL
   2. Create corresponding ACT or IMP
-  3. Infer alignment_domain
+  3. Infer workstream
   4. Update IBX status to triaged
 - **Agent:** triage persona
 - **Triggers:** new IBX items exist
@@ -88,7 +88,7 @@ User-initiated IBX creation.
 
 ### 5. **create-act** (SKL-create-act.md)
 Create action items.
-- **Inputs:** title, action_description, done_condition, alignment_domain (opt), requires_approval (opt)
+- **Inputs:** title, action_description, done_condition, workstream (opt), requires_approval (opt)
 - **Outputs:** ACT file in Flow/actions/
 - **Key actions:**
   1. Validate all inputs
@@ -161,13 +161,13 @@ Apply approved changes under ACT authority.
 - **Triggers:** approved ACT ready for execution
 
 ### 11. **summarize-alignment** (SKL-summarize-alignment.md)
-VSM overview across domains.
+VSM overview across workstreams.
 - **Inputs:** None (reads system state)
 - **Outputs:** markdown alignment summary
 - **Key actions:**
-  1. Discover domains in Alignment/
-  2. Read system5_purpose.md per domain
-  3. Scan Flow/actions/ for active work per domain
+  1. Discover workstreams in Alignment/system1_workstreams.json
+  2. Read system5_purpose.md for overall alignment
+  3. Scan Flow/actions/ for active work per workstream
   4. Identify constraints, risks
   5. Report: VSM structure, health, insights
 - **Triggers:** user requests alignment overview, periodic review
@@ -187,27 +187,27 @@ Multi-persona proposal evaluation (3 rounds).
 - **Approval Required:** Yes (synthesis informs decision)
 - **Triggers:** complex proposal, user requests review
 
-### 13. **create-domain** (SKL-create-domain.md)
-Scaffold new alignment domain.
-- **Inputs:** domain_name
-- **Outputs:** Alignment/{domain_name}/ created, alignment-index rebuilt
+### 13. **create-workstream** (SKL-create-workstream.md)
+Add new workstream to Alignment/system1_workstreams.json.
+- **Inputs:** workstream_id, purpose, status, success_criteria
+- **Outputs:** system1_workstreams.json updated
 - **Key actions:**
-  1. Validate domain_name (2-50 chars, lowercase, no collision)
-  2. Copy Alignment/_domain-template/ → Alignment/{domain_name}/
-  3. Update system5_purpose.md YAML: domain_name
-  4. Create/update alignment-index.json
-  5. Log domain creation
-- **Triggers:** user creates domain, onboarding
+  1. Validate workstream_id (lowercase, alphanumeric + hyphens)
+  2. Check for collision in system1_workstreams.json
+  3. Append new workstream object to workstreams array
+  4. Update updated_at timestamp
+  5. Log workstream creation
+- **Triggers:** user creates workstream, onboarding
 
 ### 14. **onboard-new-user** (SKL-onboard-new-user.md)
 First-run setup (2 minutes to dashboard).
-- **Inputs:** None (detects empty Alignment/)
-- **Outputs:** domains created, purpose initialized, dashboard rendered
+- **Inputs:** None (detects empty Alignment/system1_workstreams.json)
+- **Outputs:** workstreams created, purpose initialized, dashboard rendered
 - **Key actions:**
-  1. Detect onboarding needed (zero domains)
-  2. Ask user for 1-2 domain names
-  3. Create domains via SKL-create-domain
-  4. Prompt for domain purpose/strategy
+  1. Detect onboarding needed (zero workstreams)
+  2. Ask user for 1-2 workstream groups
+  3. Create workstreams via editing system1_workstreams.json
+  4. Prompt for workstream purpose/strategy
   5. Offer first work item (optional)
   6. Render dashboard
 - **No long tutorial** — minimal explanation, straight to working board
@@ -291,11 +291,11 @@ Master registry and navigation guide.
 4. SKL-review-improvement (verify execution)
 5. SKL-archive-item (cleanup)
 
-### Adding Domains
-1. SKL-create-domain (scaffold new domain)
-2. Edit Alignment/{domain}/system5_purpose.md (user fills in purpose/strategy)
-3. Create work in Flow/actions/ with alignment_domain={new_domain}
-4. SKL-summarize-alignment (confirm domain integration)
+### Adding Workstreams
+1. Edit Alignment/system1_workstreams.json (add new workstream entry)
+2. Edit Alignment/system5_purpose.md (user fills in overall purpose/strategy if needed)
+3. Create work in Flow/actions/ with workstream={new_workstream}
+4. SKL-summarize-alignment (confirm workstream integration)
 
 ### System Maintenance
 1. SKL-generate-improvements (scan for ideas)

@@ -32,8 +32,8 @@ USER INPUT ARRIVES
   ├─ Is this a decision on a pending approval?
   │  └─→ SKL-resolve-approval
   │
-  ├─ Is this about domain/alignment management?
-  │  └─→ SKL-create-domain
+  ├─ Is this about workstream/alignment management?
+  │  └─→ SKL-manage-workstreams
   │
   ├─ Is this a first-time user (empty Alignment/)?
   │  └─→ SKL-onboard-new-user
@@ -72,15 +72,15 @@ USER INPUT ARRIVES
 **Skill**: `SKL-resolve-approval`
 **Action**: Update ACT status, trigger dependent workflows
 
-### Route 6: Domain/Alignment Management
-**Condition**: "Create domain X", "Update alignment", domain queries
-**Skill**: `SKL-create-domain`
+### Route 6: Workstream/Alignment Management
+**Condition**: "Create workstream X", "Update alignment", workstream queries
+**Skill**: `SKL-manage-workstreams`
 **Action**: Manage Alignment/ structure
 
 ### Route 7: First-Time User
 **Condition**: Alignment/ directory is empty
 **Skill**: `SKL-onboard-new-user`
-**Action**: Initialize system, create default domains
+**Action**: Initialize system, create default workstreams
 
 ### Route 8: System Health / Improvements
 **Condition**: "How is the system?", improvement suggestions, sweeps

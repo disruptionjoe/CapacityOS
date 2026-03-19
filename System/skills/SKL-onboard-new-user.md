@@ -17,7 +17,7 @@ updated_at: "2026-03-13"
 ---
 
 ## Purpose
-Guided first-run experience. Suggest default domains with pre-filled workstreams, ask one goal per workstream plus one purpose sentence per domain, process a first task, introduce system improvements via the tech trio, and set up auto-improvement. Target: up and running in ~10 minutes. Friendly, fast, low cognitive load.
+Guided first-run experience. Suggest default workstreams with pre-filled tasks, ask one goal per workstream plus one purpose sentence, process a first task, introduce system improvements via the tech trio, and set up auto-improvement. Target: up and running in ~10 minutes. Friendly, fast, low cognitive load.
 
 ## Trigger Conditions
 - First time operator runs CapacityOS (no domains configured)
@@ -27,9 +27,9 @@ Guided first-run experience. Suggest default domains with pre-filled workstreams
 ## Procedure
 
 ### Step 1: Detect Onboarding Needed
-1. Check if Alignment/ directory exists — create if missing
-2. Scan Alignment/ for domain subdirectories (exclude _domain-template/)
-   - If zero domains found → onboarding is needed
+1. Check if Alignment/system1_workstreams.json exists — create if missing
+2. Read Alignment/system1_workstreams.json and check workstreams array
+   - If zero workstreams found → onboarding is needed
    - Otherwise → abort (system already initialized)
 
 ### Step 2: Welcome and Invite
@@ -89,35 +89,33 @@ Guided first-run experience. Suggest default domains with pre-filled workstreams
    ```
 
 2. Accept user choice:
-   - If user accepts defaults → domain_list = ["life-improvements", "work"]
+   - If user accepts defaults → workstream_list = ["life-improvements", "work"]
    - If user provides custom names → validate and use those
-   - Minimum 1 domain, maximum 5 for onboarding
+   - Minimum 2 workstreams, maximum 10 for onboarding
 
-### Step 3: Create Domains and Pre-Fill Workstreams
+### Step 3: Create Workstreams
 1. After user accepts defaults, display:
    ```
    Great choice. Now we're going to walk through setting up
-   these two default domains. You can always choose to keep
-   them, change them, or add more later.
+   these workstreams. You can always choose to keep them,
+   change them, or add more later.
 
-   It can be confusing what should be a domain and what
-   shouldn't. But for now, think of it this way: things that
-   have to do with your personal life are workstreams in the
-   Life Improvements domain, and things that have to do with
-   your professional life go on the Work side.
+   Workstreams are the atomic units that organize your focus.
+   Things that have to do with your personal life go under
+   life-improvements, and things that have to do with your
+   professional life go on the Work side.
    ```
 
-2. Create each domain via SKL-create-domain (silently, no need to tell user)
-3. Pre-fill default workstreams in YAML (do NOT ask — just set them):
-   - **life-improvements:** `workstreams: ["health", "finances", "relationships"]`
-   - **work:** `workstreams: ["career-development", "my-job", "side-hustle"]`
-   - Custom domains: leave workstreams empty, ask user to list 2-3
+2. Pre-populate Alignment/system1_workstreams.json with default workstreams (do NOT ask — just set them):
+   - **life-improvements:** health, finances, relationships
+   - **work:** career-development, my-job, side-hustle
+   - Custom workstreams: ask user to list 2-3 per group
 
 ### Step 4: Life Improvements — Goals per Workstream
 1. Introduce and ask the first question in the same message:
    ```
    Let's get started with a few quick questions about the
-   Life Improvements domain. I've set up three focus areas:
+   life improvements workstreams. I've set up three focus areas:
    health, finances, and relationships. You can add more later.
 
    Tell me about health — any goals, deadlines, or things
@@ -139,26 +137,25 @@ Guided first-run experience. Suggest default domains with pre-filled workstreams
 3. After all three, ask the purpose question:
    ```
    Last one for life improvements — in one sentence, what's
-   your highest-level goal for using this system to improve
-   your life?
+   your highest-level goal for this area?
    ```
 
 4. Synthesize ALL answers into the 5 system files:
-   - `system1_workstreams.md` → YAML workstreams array + goal for each as body
+   - `system1_workstreams.json` → update with goals for each workstream
    - `system2_coordination.md` → infer from answers if obvious connections mentioned, otherwise leave templated
    - `system3_optimization.md` → infer any metrics from goals if obvious, otherwise leave templated
-   - `system4_strategy.md` → infer approach from goals if obvious, otherwise leave templated
+   - `system4_intelligence.md` → infer approach from goals if obvious, otherwise leave templated
    - `system5_purpose.md` → user's one-sentence purpose
 
 5. Report:
    ```
-   Life improvements is set up. Moving on to work.
+   Life improvements workstreams are set up. Moving on to work.
    ```
 
 ### Step 5: Work — Goals per Workstream
 1. Introduce:
    ```
-   Now let's do Work.
+   Now let's do Work workstreams.
 
    I've set up three focus areas: career development, your
    current job, and your side hustle. You can change these
@@ -191,11 +188,11 @@ Guided first-run experience. Suggest default domains with pre-filled workstreams
 
 5. Report:
    ```
-   Work domain is set. Both domains are ready.
+   Work workstreams are set. Both workstream groups are ready.
    ```
 
-### Step 6: Additional Domains
-If user created more than 2 domains, repeat the pattern:
+### Step 6: Additional Workstreams
+If user created more than 2 workstream groups, repeat the pattern:
 - Pre-fill workstreams if obvious, otherwise ask for 2-3
 - One goal per workstream
 - One purpose sentence
@@ -218,7 +215,7 @@ If user created more than 2 domains, repeat the pattern:
 
    Along the way, they become structured items — tasks to do,
    decisions to make, and even system improvements or updates
-   to your domain docs.
+   to your workstream docs.
 
    Give me one task, related to any domain, and let's get
    something on the board.
@@ -267,9 +264,9 @@ If user created more than 2 domains, repeat the pattern:
    engineer, software engineer, designer) — reviews it from
    different angles before anything changes.
 
-   See that "General" section on the dashboard? It catches
-   items without a domain. Since everything should have a
-   domain, let's remove it as our first system improvement.
+   See that "Unassigned" section on the dashboard? It catches
+   items without a workstream. Since everything should have a
+   workstream, let's remove it as our first system improvement.
    ```
 
 4. Walk through IMP lifecycle:
@@ -308,8 +305,8 @@ If user created more than 2 domains, repeat the pattern:
    ```
    Onboarding complete! Here's what we set up:
 
-   Domains: {domain_list}
-   Domain docs: ✓
+   Workstreams: {workstream_list}
+   Workstream docs: ✓
    Pipeline: ✓ (first task flowing)
    Auto-normalize: ✓ (scheduled {frequency})
    Auto-improvements: ✓ (scheduled {frequency})
@@ -368,6 +365,6 @@ If user created more than 2 domains, repeat the pattern:
 - After onboarding, invite a freeform brain dump to populate the board
 - ALWAYS show the dashboard after the brain dump and at the end of every interaction from this point forward
 - End with Obsidian recommendation
-- Default workstreams:
+- Default workstreams (in system1_workstreams.json):
   - life-improvements: health, finances, relationships
   - work: career-development, my-job, side-hustle

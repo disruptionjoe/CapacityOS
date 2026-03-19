@@ -93,7 +93,7 @@ For each selected proposal:
    - **rationale**: Why this matters (performance, clarity, resilience, etc.)
    - **implementation_plan**: Numbered steps to execute
    - **effort_estimate**: Low / Medium / High
-   - **alignment_domain**: null or specific domain if applicable
+   - **workstream**: null or specific workstream if applicable
    - **affected_personas**: List of user types benefiting
 
 2. **Create IMP file:**
@@ -114,7 +114,7 @@ For each selected proposal:
        2. {step_2}
        ...
      effort_estimate: {Low | Medium | High}
-     alignment_domain: {domain_name or null}
+     workstream: {workstream_id or null}
      affected_personas: [{persona_1}, {persona_2}]
      created_at: "{timestamp}"
      updated_at: "{timestamp}"

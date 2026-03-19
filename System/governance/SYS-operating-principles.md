@@ -59,7 +59,7 @@ All three must match exactly. Any mismatch halts processing.
 **In practice:**
 - Validator checks all three independently
 - If any mismatch found, create repair task (don't fix silently)
-- Alignment domain files are exempt (lighter model for domain-specific files)
+- Alignment system files are exempt (lighter model for alignment files)
 
 **Anti-pattern:** Silently fixing filename if YAML type is authoritative — hides the corruption
 

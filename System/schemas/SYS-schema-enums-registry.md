@@ -52,7 +52,7 @@ All pipeline and system files must include these fields in their YAML front-matt
 **Required core fields:**
 - `action_description` (string): what is being done
 - `done_condition` (string): success criteria
-- `alignment_domain` (string, optional): which domain/project this serves
+- `workstream` (string, optional): which workstream this serves (from Alignment/system1_workstreams.json)
 - `requires_approval` (boolean): whether approval is required before execution
 
 **Optional routing fields:**
@@ -166,7 +166,7 @@ All three of the following must match exactly:
 
 **Mismatch detection:** Any mismatch halts processing → classify discrepancy → route to repair task → record incident.
 
-**Alignment domain files exemption:** Alignment domain files (typically in `Alignment/[domain]/` folders) are exempt from triple-redundancy and use lighter validation (see Validation Policy).
+**Alignment workstream files exemption:** Alignment files (in `Alignment/` folder) are exempt from triple-redundancy and use lighter validation (see Validation Policy).
 
 ---
 

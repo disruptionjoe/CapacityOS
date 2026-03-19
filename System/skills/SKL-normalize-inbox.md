@@ -54,7 +54,7 @@ For each raw file:
    slug: {slug}
    source: {source}
    captured_at: "{captured_at}"
-   alignment_domain: null
+   workstream: null
    tags: []
    ---
 

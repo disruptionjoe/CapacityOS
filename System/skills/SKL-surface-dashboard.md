@@ -17,7 +17,7 @@ updated_at: "2026-03-13"
 ---
 
 ## Purpose
-Render the primary operator dashboard — a real-time, ranked view of all active work items grouped by alignment domain, with trust metrics and decision entry points. This is the most critical operator interface.
+Render the primary operator dashboard — a real-time, ranked view of all active work items grouped by workstream, with trust metrics and decision entry points. This is the most critical operator interface.
 
 ## Trigger Conditions
 - Operator session startup
@@ -29,18 +29,18 @@ Render the primary operator dashboard — a real-time, ranked view of all active
 ### Phase 1: Gather System State
 
 1. **Read alignment metadata**
-   - If `System/scripts/indexes/alignment-index.json` exists, load it (cached domain list)
-   - Otherwise, scan `Alignment/*/system5_purpose.md` files to extract domain names and purpose statements
-   - Count discovered domains
+   - If `Alignment/system1_workstreams.json` exists, load it (cached workstream list)
+   - Otherwise, read `Alignment/system1_workstreams.json` to extract workstreams and purpose statements
+   - Count discovered workstreams
 
 2. **Read operations metadata**
    - If `System/scripts/indexes/ops-index.json` exists, load it
    - Otherwise, scan `Flow/actions/` directory and read all `.md` files with status ≠ done, declined, rejected
-   - Extract: slug, title, status, priority, alignment_domain, requires_approval
+   - Extract: slug, title, status, priority, workstream, requires_approval
 
 3. **Count inbox items**
    - List all files in `Flow/inbox/` with status:new or status:triage
-   - Count by alignment_domain if available
+   - Count by workstream if available
 
 4. **Read sweep status** (optional)
    - If `System/improvements/SYS-sweep-status.md` exists, extract: last_scan_timestamp, improvement_count_proposed, system_health_rating
@@ -122,10 +122,10 @@ Key formatting rules:
    - `S1 approve` → approve system change S1
    - etc.
 
-5. **Edge case: No domains configured**
-   - If domain_count = 0, render:
+5. **Edge case: No workstreams configured**
+   - If workstream_count = 0, render:
    ```
-   No domains configured yet — say 'help me get started' or see Alignment/_domain-template/
+   No workstreams configured yet — say 'help me get started' or edit Alignment/system1_workstreams.json
    ```
    Then stop.
 
@@ -138,7 +138,7 @@ Key formatting rules:
 ### Awaiting Your Decision
 - [D1] **Decide:** [ACT-{slug}](path) — {title}
 
-### {Domain Name}
+### {Workstream Name}
 *In Motion:*
 - [W1] **Do:** [ACT-{slug}](path) — {title}
 
@@ -156,7 +156,7 @@ The three coaches each give 1-2 sentences of contextual advice based on the curr
 - **Flow Coach** — focuses on execution. Given what's contained and coherent, what can actually move right now? What's the smallest next step? Flow is the THIRD priority because when containment and coherence are in place, execution builds a better life instead of many disjointed things.
 
 ## Error Handling
-- If `Alignment/` directory does not exist: treat as no domains configured
+- If `Alignment/system1_workstreams.json` does not exist: treat as no workstreams configured
 - If `Flow/actions/` or `Flow/inbox/` does not exist: treat as zero items
 - If any item file is unreadable: skip it and log to System/logs/ (do not block render)
-- If alignment_domain references a non-existent domain: route item to Flow/inbox/ for triage
+- If workstream field references a non-existent workstream: route item to Flow/inbox/ for triage

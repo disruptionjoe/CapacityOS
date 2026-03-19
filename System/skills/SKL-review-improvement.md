@@ -78,7 +78,7 @@ For each step in the implementation_plan:
 ### Step 4: Assess Impact
 1. **Check affected systems:**
    - If IMP modified System/ files: scan for PW errors, integrity checks
-   - If IMP modified Alignment/ files: verify no domain consistency issues
+   - If IMP modified Alignment/ files: verify no workstream consistency issues (check system1_workstreams.json)
    - If IMP called skills: check System/logs/ for side effects
 
 2. **Measure improvements (if applicable):**
@@ -107,7 +107,7 @@ For each step in the implementation_plan:
 
    ## System Health
    - No new errors detected
-   - Alignment domains: consistent
+   - Alignment workstreams: consistent (system1_workstreams.json verified)
    - Flow structure: intact
 
    ## Recommendation
