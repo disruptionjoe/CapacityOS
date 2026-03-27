@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/runtime/backlog-item.schema.json",
+  "title": "Backlog Item",
+  "type": "object",
+  "required": [
+    "object_type",
+    "id",
+    "status",
+    "domain_id",
+    "title",
+    "origin_types",
+    "endorsement_state",
+    "created_at",
+    "updated_at",
+    "lineage",
+    "admission"
+  ],
+  "properties": {
+    "object_type": {
+      "const": "backlog-item"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^backlog-[a-z0-9][a-z0-9-]*$"
+    },
+    "status": {
+      "enum": [
+        "candidate",
+        "active",
+        "deferred",
+        "promoted",
+        "archived"
+      ]
+    },
+    "domain_id": {
+      "$ref": "./common.schema.json#/$defs/slug"
+    },
+    "title": {
+      "$ref": "./common.schema.json#/$defs/non_empty_string"
+    },
+    "origin_types": {
+      "type": "array",
+      "items": {
+        "$ref": "./common.schema.json#/$defs/origin_type"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "endorsement_state": {
+      "$ref": "./common.schema.json#/$defs/endorsement_state"
+    },
+    "created_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "updated_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "goal_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "./common.schema.json#/$defs/goal_id"
+      },
+      "uniqueItems": true
+    },
+    "lineage": {
+      "type": "object",
+      "required": [
+        "source_refs"
+      ],
+      "properties": {
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/typed_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "intake_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/intake_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "admission": {
+      "type": "object",
+      "required": [
+        "outcome",
+        "basis"
+      ],
+      "properties": {
+        "outcome": {
+          "$ref": "./common.schema.json#/$defs/admission_outcome"
+        },
+        "basis": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/non_empty_string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "origin_types": {
+            "contains": {
+              "const": "human-intake"
+            }
+          }
+        },
+        "required": [
+          "origin_types"
+        ]
+      },
+      "then": {
+        "properties": {
+          "lineage": {
+            "required": [
+              "intake_refs"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "origin_types": {
+            "contains": {
+              "const": "execution-derived"
+            }
+          }
+        },
+        "required": [
+          "origin_types"
+        ]
+      },
+      "then": {
+        "properties": {
+          "lineage": {
+            "properties": {
+              "source_refs": {
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "object_type": {
+                      "const": "run-event"
+                    }
+                  },
+                  "required": [
+                    "object_type"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

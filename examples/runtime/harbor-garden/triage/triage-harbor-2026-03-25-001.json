@@ -1,0 +1,47 @@
+{
+  "object_type": "triage-proposal",
+  "id": "triage-harbor-2026-03-25-001",
+  "status": "approved",
+  "created_at": "2026-03-25T09:02:00Z",
+  "decided_at": "2026-03-25T09:05:00Z",
+  "intake_ref": {
+    "object_type": "intake-receipt",
+    "id": "intake-harbor-2026-03-25-001"
+  },
+  "proposed_domain_id": "harbor-garden",
+  "human_review_state": "approved",
+  "proposed_outputs": [
+    {
+      "output_type": "backlog-item",
+      "proposed_id": "backlog-harbor-volunteer-day-kit",
+      "title": "Prepare the volunteer-day kit",
+      "goal_refs": [
+        "S1-1"
+      ],
+      "basis": [
+        "The request describes a concrete upcoming event package.",
+        "The work needs a volunteer brief and support materials."
+      ]
+    },
+    {
+      "output_type": "backlog-item",
+      "proposed_id": "backlog-harbor-spring-signage",
+      "title": "Draft spring signage",
+      "goal_refs": [
+        "S1-2"
+      ],
+      "basis": [
+        "The request explicitly calls for signage.",
+        "The signage belongs to Harbor Garden rather than the system-governance domain."
+      ]
+    },
+    {
+      "output_type": "bundle-hint",
+      "proposed_id": "bundle-harbor-volunteer-day-prep",
+      "title": "Review the volunteer brief and signage as one event package",
+      "basis": [
+        "The package should be judged together before printing or posting."
+      ]
+    }
+  ]
+}

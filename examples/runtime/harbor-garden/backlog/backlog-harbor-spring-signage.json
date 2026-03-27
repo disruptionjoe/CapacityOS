@@ -1,0 +1,37 @@
+{
+  "object_type": "backlog-item",
+  "id": "backlog-harbor-spring-signage",
+  "status": "active",
+  "domain_id": "harbor-garden",
+  "title": "Draft spring signage",
+  "origin_types": [
+    "human-intake"
+  ],
+  "endorsement_state": "human-triaged",
+  "created_at": "2026-03-25T09:05:00Z",
+  "updated_at": "2026-03-25T09:10:00Z",
+  "goal_refs": [
+    "S1-2"
+  ],
+  "lineage": {
+    "source_refs": [
+      {
+        "object_type": "triage-proposal",
+        "id": "triage-harbor-2026-03-25-001"
+      }
+    ],
+    "intake_refs": [
+      {
+        "object_type": "intake-receipt",
+        "id": "intake-harbor-2026-03-25-001"
+      }
+    ]
+  },
+  "admission": {
+    "outcome": "create",
+    "basis": [
+      "The request directly supports the next volunteer-day communication package.",
+      "The work fits Harbor Garden System 1 goal S1-2."
+    ]
+  }
+}

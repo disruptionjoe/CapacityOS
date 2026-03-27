@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/runtime/run-event.schema.json",
+  "title": "Run Event",
+  "type": "object",
+  "required": [
+    "object_type",
+    "id",
+    "status",
+    "run_type",
+    "recorded_at",
+    "started_at",
+    "lineage",
+    "preflight"
+  ],
+  "properties": {
+    "object_type": {
+      "const": "run-event"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^run-[a-z0-9][a-z0-9-]*$"
+    },
+    "status": {
+      "enum": [
+        "started",
+        "completed",
+        "failed",
+        "cancelled"
+      ]
+    },
+    "run_type": {
+      "enum": [
+        "execution",
+        "review",
+        "generation"
+      ]
+    },
+    "recorded_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "started_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "ended_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "lineage": {
+      "type": "object",
+      "required": [
+        "source_refs"
+      ],
+      "properties": {
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "./common.schema.json#/$defs/queue_ref"
+              },
+              {
+                "$ref": "./common.schema.json#/$defs/bundle_ref"
+              }
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "artifact_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/artifact_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "emitted_intake_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/intake_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "preflight": {
+      "type": "object",
+      "required": [
+        "checked_at",
+        "freshness_outcome",
+        "collision_outcome",
+        "collision_basis"
+      ],
+      "properties": {
+        "checked_at": {
+          "$ref": "./common.schema.json#/$defs/timestamp"
+        },
+        "freshness_outcome": {
+          "$ref": "./common.schema.json#/$defs/collision_outcome"
+        },
+        "collision_outcome": {
+          "$ref": "./common.schema.json#/$defs/collision_outcome"
+        },
+        "collision_basis": {
+          "$ref": "./common.schema.json#/$defs/closed_collision_basis"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/typed_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "completed",
+              "failed",
+              "cancelled"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "ended_at"
+        ]
+      }
+    }
+  ]
+}

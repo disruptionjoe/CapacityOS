@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/project.schema.json",
+  "title": "Project",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "purpose",
+    "voice",
+    "status"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "purpose": { "type": "string" },
+    "voice": { "type": "string" },
+    "repo_path": { "type": "string" },
+    "workspace_path": { "type": "string" },
+    "automation_policy": { "type": "string" },
+    "status": { "type": "string" },
+    "provenance": { "type": "object" }
+  },
+  "additionalProperties": true
+}

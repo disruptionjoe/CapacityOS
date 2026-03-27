@@ -1,0 +1,65 @@
+{
+  "object_type": "queue-item",
+  "id": "queue-harbor-spring-signage",
+  "status": "queued",
+  "domain_id": "harbor-garden",
+  "title": "Draft spring signage",
+  "execution_mode": "agent",
+  "goal_refs": [
+    "S1-2"
+  ],
+  "lineage": {
+    "source_refs": [
+      {
+        "object_type": "backlog-item",
+        "id": "backlog-harbor-spring-signage"
+      }
+    ],
+    "intake_refs": [
+      {
+        "object_type": "intake-receipt",
+        "id": "intake-harbor-2026-03-25-001"
+      }
+    ]
+  },
+  "promotion": {
+    "promoted_at": "2026-03-25T09:40:00Z",
+    "basis": [
+      "Signage is directly needed for the next event package.",
+      "The wording can be prepared before any physical consequence step."
+    ],
+    "readiness_basis": [
+      "The event scope is specific enough for a first printable draft.",
+      "The work does not require public posting yet."
+    ]
+  },
+  "assumptions_in_force": [
+    "The event messaging has not materially changed since intake.",
+    "The signage should stay aligned with the volunteer brief."
+  ],
+  "collision_basis": {
+    "goal_refs": [
+      "S1-2"
+    ],
+    "consequence_refs": [
+      "volunteer-day-2026-03-29"
+    ]
+  },
+  "freshness": {
+    "status": "fresh",
+    "checked_at": "2026-03-25T09:50:00Z",
+    "evidence_refs": [
+      {
+        "object_type": "backlog-item",
+        "id": "backlog-harbor-spring-signage"
+      },
+      {
+        "object_type": "intake-receipt",
+        "id": "intake-harbor-2026-03-25-001"
+      }
+    ]
+  },
+  "supersession": {
+    "relationship": "none"
+  }
+}

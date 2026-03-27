@@ -1,33 +1,34 @@
-# ===== Personal data — never push to public repo =====
+# Engine-only repo rules for CapacityOS
 
-# Flow: ignore personal files but keep folder structure via .gitkeep
-Flow/inbox/*
-!Flow/inbox/.gitkeep
-Flow/actions/*
-!Flow/actions/.gitkeep
-Flow/archive/*
-!Flow/archive/.gitkeep
-Flow/intake/*
-!Flow/intake/.gitkeep
+# Local private canon, runtime, and colocated workspaces stay out of the
+# publishable engine.
+/local/
 
-# Alignment: keep only the _domain-template for the public repo
-Alignment/*/
-!Alignment/_domain-template/
+# Legacy nested workspace/repo kept only as a reference source while CapacityOS
+# becomes the real repo root.
+/JoeCapacityOS/
 
-# ===== System — DO push to GitHub =====
-# (nothing ignored here — System/ is the open-source core)
+# Legacy local-state paths kept ignored during migration.
+/runtime/
+/imports/
+/archive/
+/attachments/
+/private/
 
-# ===== Build artifacts =====
-System/scripts/__pycache__/
-System/scripts/indexes/
+# Keep child repos out of the engine repo if older layouts are still present.
+/projects/site/
+/projects/caret-repo/
 
-# ===== Attachments (Obsidian images, files, etc.) =====
-_attachments/
+# Private or sensitive material
+*.secret
+*.env
 
-# ===== OS / editor junk =====
+# Editor / OS noise
 .DS_Store
 Thumbs.db
 .obsidian/
-*.swp
-*.swo
-*~
+
+# Build / cache noise
+__pycache__/
+.pytest_cache/
+*.pyc

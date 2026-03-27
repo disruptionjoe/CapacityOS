@@ -1,0 +1,37 @@
+{
+  "object_type": "backlog-item",
+  "id": "backlog-harbor-volunteer-day-kit",
+  "status": "active",
+  "domain_id": "harbor-garden",
+  "title": "Prepare the volunteer-day kit",
+  "origin_types": [
+    "human-intake"
+  ],
+  "endorsement_state": "human-triaged",
+  "created_at": "2026-03-25T09:05:00Z",
+  "updated_at": "2026-03-25T09:10:00Z",
+  "goal_refs": [
+    "S1-1"
+  ],
+  "lineage": {
+    "source_refs": [
+      {
+        "object_type": "triage-proposal",
+        "id": "triage-harbor-2026-03-25-001"
+      }
+    ],
+    "intake_refs": [
+      {
+        "object_type": "intake-receipt",
+        "id": "intake-harbor-2026-03-25-001"
+      }
+    ]
+  },
+  "admission": {
+    "outcome": "create",
+    "basis": [
+      "The request creates a real upcoming event package rather than a speculative note.",
+      "The work fits Harbor Garden System 1 goal S1-1."
+    ]
+  }
+}

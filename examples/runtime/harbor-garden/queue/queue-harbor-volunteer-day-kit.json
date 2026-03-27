@@ -1,0 +1,65 @@
+{
+  "object_type": "queue-item",
+  "id": "queue-harbor-volunteer-day-kit",
+  "status": "queued",
+  "domain_id": "harbor-garden",
+  "title": "Prepare the volunteer-day kit",
+  "execution_mode": "hybrid",
+  "goal_refs": [
+    "S1-1"
+  ],
+  "lineage": {
+    "source_refs": [
+      {
+        "object_type": "backlog-item",
+        "id": "backlog-harbor-volunteer-day-kit"
+      }
+    ],
+    "intake_refs": [
+      {
+        "object_type": "intake-receipt",
+        "id": "intake-harbor-2026-03-25-001"
+      }
+    ]
+  },
+  "promotion": {
+    "promoted_at": "2026-03-25T09:35:00Z",
+    "basis": [
+      "The work directly supports the next volunteer-day package.",
+      "The package can be prepared before any physical-world action happens."
+    ],
+    "readiness_basis": [
+      "The event timing is known well enough to draft materials.",
+      "The human consequence steps remain clearly separated."
+    ]
+  },
+  "assumptions_in_force": [
+    "The volunteer day is still expected to happen this weekend.",
+    "Physical-world execution still requires human approval."
+  ],
+  "collision_basis": {
+    "goal_refs": [
+      "S1-1"
+    ],
+    "consequence_refs": [
+      "volunteer-day-2026-03-29"
+    ]
+  },
+  "freshness": {
+    "status": "fresh",
+    "checked_at": "2026-03-25T09:50:00Z",
+    "evidence_refs": [
+      {
+        "object_type": "backlog-item",
+        "id": "backlog-harbor-volunteer-day-kit"
+      },
+      {
+        "object_type": "intake-receipt",
+        "id": "intake-harbor-2026-03-25-001"
+      }
+    ]
+  },
+  "supersession": {
+    "relationship": "none"
+  }
+}

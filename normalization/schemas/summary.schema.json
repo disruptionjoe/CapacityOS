@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/summary.schema.json",
+  "title": "Summary",
+  "type": "object",
+  "required": [
+    "id",
+    "summary_type",
+    "created_at"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "summary_type": { "type": "string" },
+    "created_at": { "type": "string" },
+    "task_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "artifact_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "run_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "path": { "type": "string" },
+    "provenance": { "type": "object" }
+  },
+  "additionalProperties": true
+}

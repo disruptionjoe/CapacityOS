@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/task.schema.json",
+  "title": "Task",
+  "type": "object",
+  "required": [
+    "id",
+    "project_id",
+    "title",
+    "status",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "project_id": { "type": "string" },
+    "title": { "type": "string" },
+    "status": { "type": "string" },
+    "origin": { "type": "string" },
+    "owner": { "type": "string" },
+    "approval_state": { "type": "string" },
+    "created_at": { "type": "string" },
+    "updated_at": { "type": "string" },
+    "plan_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "artifact_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "provenance": { "type": "object" }
+  },
+  "additionalProperties": true
+}

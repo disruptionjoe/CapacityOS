@@ -1,0 +1,32 @@
+{
+  "object_type": "bundle",
+  "id": "bundle-harbor-volunteer-day-prep",
+  "status": "ready",
+  "domain_id": "harbor-garden",
+  "created_at": "2026-03-25T10:00:00Z",
+  "member_queue_refs": [
+    {
+      "object_type": "queue-item",
+      "id": "queue-harbor-volunteer-day-kit"
+    },
+    {
+      "object_type": "queue-item",
+      "id": "queue-harbor-spring-signage"
+    }
+  ],
+  "bundle_basis": [
+    "The volunteer brief and signage should be judged together before printing or posting.",
+    "Both queue items support the same volunteer-day consequence path."
+  ],
+  "assumptions_in_force": [
+    "The volunteer day is still planned for the upcoming weekend.",
+    "The signage wording and volunteer brief should stay consistent."
+  ],
+  "shared_consequence_refs": [
+    "volunteer-day-2026-03-29"
+  ],
+  "invalidation_policy": "fail-closed",
+  "supersession": {
+    "relationship": "none"
+  }
+}

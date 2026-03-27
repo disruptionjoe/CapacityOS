@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/run.schema.json",
+  "title": "Run",
+  "type": "object",
+  "required": [
+    "id",
+    "run_type",
+    "started_at"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "run_type": { "type": "string" },
+    "started_at": { "type": "string" },
+    "completed_at": { "type": "string" },
+    "task_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "notes": { "type": "string" },
+    "provenance": { "type": "object" }
+  },
+  "additionalProperties": true
+}

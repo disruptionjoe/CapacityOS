@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/runtime/common.schema.json",
+  "title": "CapacityOS Runtime Shared Definitions",
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "goal_id": {
+      "type": "string",
+      "pattern": "^S[145]-[A-Za-z0-9][A-Za-z0-9-]*$"
+    },
+    "string_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      },
+      "uniqueItems": true
+    },
+    "source_type": {
+      "enum": [
+        "human-conversation",
+        "human-direct",
+        "execution-derived",
+        "system-generated"
+      ]
+    },
+    "routing_mode": {
+      "enum": [
+        "^que",
+        "^now"
+      ]
+    },
+    "origin_type": {
+      "enum": [
+        "human-intake",
+        "agent-derived",
+        "execution-derived",
+        "system-generated"
+      ]
+    },
+    "human_review_state": {
+      "enum": [
+        "not-required",
+        "pending",
+        "approved",
+        "rejected"
+      ]
+    },
+    "endorsement_state": {
+      "enum": [
+        "unreviewed",
+        "agent-suggested",
+        "human-triaged",
+        "human-approved"
+      ]
+    },
+    "admission_outcome": {
+      "enum": [
+        "create",
+        "merge",
+        "split"
+      ]
+    },
+    "execution_mode": {
+      "enum": [
+        "agent",
+        "human",
+        "hybrid"
+      ]
+    },
+    "collision_outcome": {
+      "enum": [
+        "fresh",
+        "pause-for-retriage",
+        "superseded",
+        "escalate-to-human"
+      ]
+    },
+    "freshness_state": {
+      "enum": [
+        "unchecked",
+        "fresh",
+        "pause-for-retriage",
+        "superseded",
+        "escalate-to-human"
+      ]
+    },
+    "supersession_relationship": {
+      "enum": [
+        "none",
+        "full-replacement",
+        "partial-replacement",
+        "invalidated-by-new-fact",
+        "pause-pending-retriage"
+      ]
+    },
+    "bundle_invalidation_policy": {
+      "enum": [
+        "fail-closed",
+        "partial-safe"
+      ]
+    },
+    "typed_ref": {
+      "type": "object",
+      "required": [
+        "object_type",
+        "id"
+      ],
+      "properties": {
+        "object_type": {
+          "enum": [
+            "domain",
+            "decision-record",
+            "intake-receipt",
+            "triage-proposal",
+            "backlog-item",
+            "queue-item",
+            "bundle",
+            "review-package",
+            "artifact",
+            "issue",
+            "run-event"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/slug"
+        }
+      },
+      "additionalProperties": false
+    },
+    "typed_ref_list": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/typed_ref"
+      },
+      "uniqueItems": true
+    },
+    "intake_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "intake-receipt"
+            }
+          }
+        }
+      ]
+    },
+    "backlog_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "backlog-item"
+            }
+          }
+        }
+      ]
+    },
+    "queue_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "queue-item"
+            }
+          }
+        }
+      ]
+    },
+    "bundle_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "bundle"
+            }
+          }
+        }
+      ]
+    },
+    "run_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "run-event"
+            }
+          }
+        }
+      ]
+    },
+    "artifact_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "artifact"
+            }
+          }
+        }
+      ]
+    },
+    "closed_collision_basis": {
+      "type": "object",
+      "properties": {
+        "goal_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/goal_id"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "object_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/typed_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "consequence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/slug"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "goal_refs"
+          ]
+        },
+        {
+          "required": [
+            "object_refs"
+          ]
+        },
+        {
+          "required": [
+            "consequence_refs"
+          ]
+        }
+      ]
+    }
+  }
+}

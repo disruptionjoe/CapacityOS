@@ -1,0 +1,15 @@
+{
+  "object_type": "intake-receipt",
+  "id": "intake-harbor-2026-03-25-001",
+  "status": "routed",
+  "captured_at": "2026-03-25T09:00:00Z",
+  "routed_at": "2026-03-25T09:01:00Z",
+  "source_type": "human-conversation",
+  "routing_mode": "^que",
+  "domain_hint": "harbor-garden",
+  "summary": "Need simple signage and a volunteer brief for Saturday's garden day.",
+  "source": {
+    "kind": "raw-text",
+    "raw_text": "Need simple signage and a volunteer brief for Saturday's garden day."
+  }
+}

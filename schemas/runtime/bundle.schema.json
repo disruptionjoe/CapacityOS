@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/runtime/bundle.schema.json",
+  "title": "Bundle",
+  "type": "object",
+  "required": [
+    "object_type",
+    "id",
+    "status",
+    "domain_id",
+    "created_at",
+    "member_queue_refs",
+    "bundle_basis",
+    "assumptions_in_force",
+    "invalidation_policy",
+    "supersession"
+  ],
+  "properties": {
+    "object_type": {
+      "const": "bundle"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^bundle-[a-z0-9][a-z0-9-]*$"
+    },
+    "status": {
+      "enum": [
+        "forming",
+        "awaiting_bundle_review",
+        "ready",
+        "paused",
+        "superseded",
+        "done"
+      ]
+    },
+    "domain_id": {
+      "$ref": "./common.schema.json#/$defs/slug"
+    },
+    "created_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "member_queue_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "./common.schema.json#/$defs/queue_ref"
+      },
+      "minItems": 2,
+      "uniqueItems": true
+    },
+    "bundle_basis": {
+      "type": "array",
+      "items": {
+        "$ref": "./common.schema.json#/$defs/non_empty_string"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "assumptions_in_force": {
+      "type": "array",
+      "items": {
+        "$ref": "./common.schema.json#/$defs/non_empty_string"
+      },
+      "uniqueItems": true
+    },
+    "shared_consequence_refs": {
+      "type": "array",
+      "items": {
+        "$ref": "./common.schema.json#/$defs/slug"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "invalidation_policy": {
+      "$ref": "./common.schema.json#/$defs/bundle_invalidation_policy"
+    },
+    "supersession": {
+      "type": "object",
+      "required": [
+        "relationship"
+      ],
+      "properties": {
+        "relationship": {
+          "$ref": "./common.schema.json#/$defs/supersession_relationship"
+        },
+        "by_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/bundle_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "relationship": {
+                "enum": [
+                  "full-replacement",
+                  "partial-replacement",
+                  "invalidated-by-new-fact"
+                ]
+              }
+            },
+            "required": [
+              "relationship"
+            ]
+          },
+          "then": {
+            "required": [
+              "by_refs"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

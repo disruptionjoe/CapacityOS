@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/import-manifest.schema.json",
+  "title": "Import Manifest Row",
+  "type": "object",
+  "required": [
+    "source_path",
+    "bundle",
+    "disposition",
+    "target_home"
+  ],
+  "properties": {
+    "source_path": { "type": "string" },
+    "bundle": { "type": "string" },
+    "disposition": { "type": "string" },
+    "target_home": { "type": "string" },
+    "notes": { "type": "string" }
+  },
+  "additionalProperties": false
+}

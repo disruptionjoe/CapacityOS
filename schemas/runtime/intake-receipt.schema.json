@@ -1,0 +1,179 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/runtime/intake-receipt.schema.json",
+  "title": "Intake Receipt",
+  "type": "object",
+  "required": [
+    "object_type",
+    "id",
+    "status",
+    "captured_at",
+    "source_type",
+    "routing_mode",
+    "source"
+  ],
+  "properties": {
+    "object_type": {
+      "const": "intake-receipt"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^intake-[a-z0-9][a-z0-9-]*$"
+    },
+    "status": {
+      "enum": [
+        "captured",
+        "routed"
+      ]
+    },
+    "captured_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "routed_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "source_type": {
+      "$ref": "./common.schema.json#/$defs/source_type"
+    },
+    "routing_mode": {
+      "$ref": "./common.schema.json#/$defs/routing_mode"
+    },
+    "domain_hint": {
+      "$ref": "./common.schema.json#/$defs/slug"
+    },
+    "summary": {
+      "$ref": "./common.schema.json#/$defs/non_empty_string"
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "raw-text",
+            "structured-payload",
+            "external-ref"
+          ]
+        },
+        "raw_text": {
+          "$ref": "./common.schema.json#/$defs/non_empty_string"
+        },
+        "payload": {},
+        "external_ref": {
+          "$ref": "./common.schema.json#/$defs/non_empty_string"
+        }
+      },
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "kind": {
+              "const": "raw-text"
+            }
+          },
+          "required": [
+            "raw_text"
+          ]
+        },
+        {
+          "properties": {
+            "kind": {
+              "const": "structured-payload"
+            }
+          },
+          "required": [
+            "payload"
+          ]
+        },
+        {
+          "properties": {
+            "kind": {
+              "const": "external-ref"
+            }
+          },
+          "required": [
+            "external_ref"
+          ]
+        }
+      ]
+    },
+    "lineage": {
+      "type": "object",
+      "properties": {
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/typed_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "queue_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/queue_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "run_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/run_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "routed"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "routed_at"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "source_type": {
+            "const": "execution-derived"
+          }
+        },
+        "required": [
+          "source_type"
+        ]
+      },
+      "then": {
+        "required": [
+          "lineage"
+        ],
+        "properties": {
+          "lineage": {
+            "required": [
+              "source_refs",
+              "queue_refs",
+              "run_refs"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

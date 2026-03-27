@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/artifact.schema.json",
+  "title": "Artifact",
+  "type": "object",
+  "required": [
+    "id",
+    "task_id",
+    "project_id",
+    "type",
+    "review_state"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "task_id": { "type": "string" },
+    "project_id": { "type": "string" },
+    "type": { "type": "string" },
+    "review_state": { "type": "string" },
+    "path": { "type": "string" },
+    "produced_by_run": { "type": "string" },
+    "provenance": { "type": "object" }
+  },
+  "additionalProperties": true
+}

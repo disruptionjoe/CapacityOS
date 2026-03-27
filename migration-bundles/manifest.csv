@@ -1,0 +1,49 @@
+source_path,bundle,disposition,target_home,notes
+ea-os/SKILL.md,01-personal-canon,migrate,harness/personal/router/SKILL.md,Core routing law to preserve and refactor
+ea-os/chief-of-staff.md,01-personal-canon,migrate,harness/personal/policies/chief-of-staff.md,Durable routing and voice logic
+ea-os/skills/intake.md,01-personal-canon,migrate,harness/personal/router/skills/intake.md,Normalize into personal capture skill
+ea-os/skills/review.md,01-personal-canon,migrate,harness/personal/router/skills/review.md,Normalize into personal review skill
+ea-os/skills/priority.md,01-personal-canon,migrate,harness/personal/priority/priority.md,Normalize into personal priority logic
+ea-os/skills/coach.md,01-personal-canon,migrate,harness/personal/coaching/coach.md,Durable coaching behavior
+ea-os/skills/improve.md,01-personal-canon,migrate,harness/personal/policies/improve.md,Reflexive-improvement behavior
+ea-os/skills/memory.md,01-personal-canon,migrate,harness/personal/memory/memory.md,Durable memory contract
+ea-os/skills/queue-sync.md,01-personal-canon,rewrite,harness/personal/factory/queue-policy.md,Replace manual bridge with canonical task queue
+ea-os/skills/caret-content.md,02-project-canon,migrate,harness/projects/caret/content-skill.md,Project-specific content rule set
+ea-os/skills/pattern-draft.md,02-project-canon,migrate,harness/projects/caret/pattern-draft.md,Project-local drafting rule set
+ea-os/scripts/index.json,01-personal-canon,migrate,harness/personal/tooling/skill-index.json,Normalize path assumptions
+ea-os/scripts/loader.py,01-personal-canon,migrate,scripts/loader.py,Refactor for engine/runtime aware discovery
+ea-os/references/schemas.md,04-runtime-reference,rewrite,docs/legacy/ea-os-schemas-reference.md,Reference only once JSON schemas exist
+.skills/skills/ea-os/SKILL.md,01-personal-canon,rewrite,harness/platforms/cowork/SKILL.md,Reduce to a thin Cowork adapter
+data/brand-voice-guide.md,01-personal-canon,migrate,harness/personal/policies/brand-voice.md,Durable brand and project voice policy
+data/agents/registry.md,01-personal-canon,migrate,harness/personal/policies/agent-registry.md,Durable role and voice registry
+data/agents/decisions.md,01-personal-canon,migrate,harness/personal/policies/standing-decisions.md,Keep standing rules but split runtime observations later if needed
+data/profile/joe.md,05-private-manual,migrate,runtime/private/profile/joe.md,Sensitive personal profile
+data/profile/memory.md,05-private-manual,migrate,runtime/private/profile/memory.md,Sensitive evolving memory
+data/joe-priority-profile.md,04-runtime-reference,archive,runtime/archive/reference/joe-priority-profile.md,Useful historical profile but superseded
+data/state.json,03-runtime-active,rewrite,runtime/views/state-cache.json,Convert from drift-prone state file to derived cache
+data/intake/,03-runtime-active,normalize,runtime/inbox/,Convert into canonical captured tasks
+data/reviewed/,03-runtime-active,normalize,runtime/tasks/,Convert pending/reviewed records into canonical tasks
+data/backlog/,04-runtime-reference,normalize,runtime/archive/reference/backlog-import/,Review item-by-item before reactivating
+data/plans/,03-runtime-active,normalize,runtime/tasks/ and runtime/plans/,Split active tasks from plans/prompts/agendas
+data/drafts/,04-runtime-reference,normalize,runtime/archive/project-drafts/,Sort into project artifacts vs legacy reference
+data/notes/night-factory-log.md,03-runtime-active,normalize,runtime/runs/logs/night-factory-log.md,Carry forward append-only history with provenance
+data/notes/morning-summary.md,03-runtime-active,normalize,runtime/runs/summaries/morning-summary.md,Current latest morning handoff
+data/notes/*.json,04-runtime-reference,normalize,runtime/archive/reference/daily-notes/,Historical daily notes
+data/summaries/,04-runtime-reference,archive,runtime/archive/reference/summaries/,Legacy summaries remain searchable only
+data/archive/,04-runtime-reference,archive,runtime/archive/legacy/,Do not reactivate by default
+data/shelf/,04-runtime-reference,rewrite,runtime/archive/reference/shelves/,Useful shelf experiments but not canonical state
+attachments/,05-private-manual,migrate,runtime/private/imports/attachments/,Potentially sensitive imported materials
+site/,02-project-canon,migrate,projects/site/,Separate child repo; keep outside engine history
+caret-repo/,02-project-canon,migrate,projects/caret-repo/,Separate child repo; keep outside engine history
+data/drafts/acon/,04-runtime-reference,archive,runtime/archive/reference/acon-legacy/,Historical ACON drafts
+data/drafts/caret-repo-draft/,02-project-canon,normalize,runtime/archive/project-drafts/caret/,Compare against live caret-repo before promoting anything
+data/plans/pure-tuesday-agenda.md,02-project-canon,normalize,harness/projects/pure/reference/pure-tuesday-agenda.md,Durable reference for Pure collaboration
+data/plans/pure-github-repo-plan.md,02-project-canon,normalize,harness/projects/pure/reference/pure-github-repo-plan.md,Durable Pure planning reference
+data/plans/20260324-system-audit-prompt.md,04-runtime-reference,archive,docs/legacy/system-audit-prompt.md,Reference only
+data/plans/20260324-three-layer-harness-and-operating-model-plan.md,04-runtime-reference,archive,docs/legacy/three-layer-harness-plan.md,Reference only; superseded by architecture lock
+data/plans/20260324-cross-platform-harness-alignment.md,04-runtime-reference,archive,docs/legacy/cross-platform-harness-plan.md,Reference only; superseded by architecture lock
+ea-os-eval-review.html,06-ignore-or-drop,drop,none,Vestigial review export
+ea-os-eval-review-v2.html,06-ignore-or-drop,drop,none,Vestigial review export
+ea-os.skill,06-ignore-or-drop,drop,none,Legacy export artifact not needed in next system
+.obsidian/,06-ignore-or-drop,drop,none,Editor metadata only
+.auto-memory/user_caret_naming.md,04-runtime-reference,archive,runtime/archive/reference/auto-memory/user_caret_naming.md,Useful rename context only

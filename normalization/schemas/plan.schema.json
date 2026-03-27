@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/plan.schema.json",
+  "title": "Plan",
+  "type": "object",
+  "required": [
+    "id",
+    "task_id",
+    "title",
+    "status"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "task_id": { "type": "string" },
+    "title": { "type": "string" },
+    "status": { "type": "string" },
+    "summary": { "type": "string" },
+    "provenance": { "type": "object" }
+  },
+  "additionalProperties": true
+}

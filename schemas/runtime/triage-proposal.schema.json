@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/runtime/triage-proposal.schema.json",
+  "title": "Triage Proposal",
+  "type": "object",
+  "required": [
+    "object_type",
+    "id",
+    "status",
+    "created_at",
+    "intake_ref",
+    "proposed_domain_id",
+    "human_review_state",
+    "proposed_outputs"
+  ],
+  "properties": {
+    "object_type": {
+      "const": "triage-proposal"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^triage-[a-z0-9][a-z0-9-]*$"
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "approved",
+        "rejected",
+        "split"
+      ]
+    },
+    "created_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "decided_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "intake_ref": {
+      "$ref": "./common.schema.json#/$defs/intake_ref"
+    },
+    "proposed_domain_id": {
+      "$ref": "./common.schema.json#/$defs/slug"
+    },
+    "human_review_state": {
+      "$ref": "./common.schema.json#/$defs/human_review_state"
+    },
+    "proposed_outputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "output_type",
+          "title"
+        ],
+        "properties": {
+          "output_type": {
+            "enum": [
+              "backlog-item",
+              "bundle-hint",
+              "issue",
+              "goal-update-proposal",
+              "reject"
+            ]
+          },
+          "proposed_id": {
+            "$ref": "./common.schema.json#/$defs/slug"
+          },
+          "title": {
+            "$ref": "./common.schema.json#/$defs/non_empty_string"
+          },
+          "goal_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "./common.schema.json#/$defs/goal_id"
+            },
+            "uniqueItems": true
+          },
+          "basis": {
+            "type": "array",
+            "items": {
+              "$ref": "./common.schema.json#/$defs/non_empty_string"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        },
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "output_type": {
+                  "enum": [
+                    "backlog-item",
+                    "bundle-hint",
+                    "issue",
+                    "goal-update-proposal"
+                  ]
+                }
+              },
+              "required": [
+                "output_type"
+              ]
+            },
+            "then": {
+              "required": [
+                "proposed_id"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "approved",
+              "rejected",
+              "split"
+            ]
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "required": [
+          "decided_at"
+        ]
+      }
+    }
+  ]
+}
