@@ -261,6 +261,10 @@ Recommended first set:
 
 - `scripts/review/build-review-package`
 
+### Execution
+
+- `scripts/execution/record-artifact`
+
 ### Views
 
 - `scripts/views/build-daily-operating-view`
