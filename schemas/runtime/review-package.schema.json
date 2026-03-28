@@ -7,9 +7,11 @@
     "object_type",
     "id",
     "review_level",
+    "review_kind",
     "created_at",
     "domain_ids",
     "lineage",
+    "review_basis",
     "prepared_findings",
     "recommended_actions",
     "human_decision_state"
@@ -24,6 +26,13 @@
     },
     "review_level": {
       "$ref": "./common.schema.json#/$defs/review_level"
+    },
+    "review_kind": {
+      "enum": [
+        "observational",
+        "gating",
+        "decision-shaping"
+      ]
     },
     "created_at": {
       "$ref": "./common.schema.json#/$defs/timestamp"
@@ -68,6 +77,14 @@
         }
       },
       "additionalProperties": false
+    },
+    "review_basis": {
+      "type": "array",
+      "items": {
+        "$ref": "./common.schema.json#/$defs/non_empty_string"
+      },
+      "minItems": 1,
+      "uniqueItems": true
     },
     "prepared_findings": {
       "type": "array",

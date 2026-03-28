@@ -10,6 +10,7 @@
     "artifact_type",
     "status",
     "created_at",
+    "creation_context",
     "lineage"
   ],
   "properties": {
@@ -37,6 +38,9 @@
     },
     "created_at": {
       "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "creation_context": {
+      "$ref": "./common.schema.json#/$defs/non_empty_string"
     },
     "summary": {
       "$ref": "./common.schema.json#/$defs/non_empty_string"

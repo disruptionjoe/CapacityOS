@@ -351,6 +351,7 @@ foreach ($file in $files) {
     "review-package" {
       $id = Req-Str $object "id" $path $issues; if ($null -ne $id -and $id -notmatch '^review-[a-z0-9][a-z0-9-]*$') { Add-Issue $issues $path "field 'id' must match the review id contract" }
       Req-Enum $object "review_level" @("system-2", "system-3", "system-4", "system-5") $path $issues | Out-Null
+      Req-Enum $object "review_kind" @("observational", "gating", "decision-shaping") $path $issues | Out-Null
       Req-Ts $object "created_at" $path $issues | Out-Null
       $decidedAt = Opt-Ts $object "decided_at" $path $issues
       $domainIds = Validate-StringArray (GetVal $object "domain_ids") "domain_ids" 1 $path $issues "slug"
@@ -358,6 +359,7 @@ foreach ($file in $files) {
       if ($null -ne $lineage) {
         Validate-RefArray (GetVal $lineage "source_refs") "lineage.source_refs" 1 $path $issues @("queue-item", "bundle", "artifact", "run-event") | Out-Null
       }
+      Validate-StringArray (GetVal $object "review_basis") "review_basis" 1 $path $issues | Out-Null
       Validate-StringArray (GetVal $object "prepared_findings") "prepared_findings" 1 $path $issues | Out-Null
       Validate-StringArray (GetVal $object "recommended_actions") "recommended_actions" 1 $path $issues | Out-Null
       $decisionState = Req-Enum $object "human_decision_state" @("not-required", "pending", "approved", "rejected") $path $issues
@@ -369,6 +371,7 @@ foreach ($file in $files) {
       $artifactType = Req-Str $object "artifact_type" $path $issues; if ($null -ne $artifactType -and -not (IsSlug $artifactType)) { Add-Issue $issues $path "field 'artifact_type' must be a canonical slug" }
       Req-Enum $object "status" @("draft", "review_ready", "final", "superseded", "archived") $path $issues | Out-Null
       Req-Ts $object "created_at" $path $issues | Out-Null
+      Req-Str $object "creation_context" $path $issues | Out-Null
       Opt-Str $object "summary" $path $issues | Out-Null
       $lineage = Req-Obj $object "lineage" $path $issues
       if ($null -ne $lineage) {
