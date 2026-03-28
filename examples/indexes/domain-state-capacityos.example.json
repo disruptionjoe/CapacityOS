@@ -1,0 +1,91 @@
+{
+  "object_type": "domain-state-packet",
+  "id": "domain-state-capacityos",
+  "generated_at": "2026-03-27T18:47:00Z",
+  "domain_id": "capacityos",
+  "domain_ref": {
+    "object_type": "domain",
+    "id": "capacityos"
+  },
+  "canon_snapshot": {
+    "class": "system-governance",
+    "status": "active",
+    "purpose_statement": "Define, govern, and improve CapacityOS as a reusable operating-system pattern that separates engine containment, domain coherence, and runtime flow.",
+    "key_goal_refs": [
+      "S4-1",
+      "S4-2",
+      "S4-3"
+    ],
+    "key_decision_refs": [
+      {
+        "object_type": "decision-record",
+        "id": "domain-centric-coherence"
+      },
+      {
+        "object_type": "decision-record",
+        "id": "reserved-system-governance-domain"
+      },
+      {
+        "object_type": "decision-record",
+        "id": "engine-owns-cadence"
+      }
+    ]
+  },
+  "focus": {
+    "active_goal_refs": [
+      "S4-1",
+      "S4-2"
+    ],
+    "active_assumptions": [
+      "The public engine, starter pack, and local overlay boundary can remain stable while packet schemas are introduced.",
+      "Agents can load compiled packet state first and only fetch deeper canon or runtime when ambiguity remains."
+    ],
+    "active_risks": [
+      {
+        "summary": "The engine, pack, and workbench boundary is still settling, so documentation and folder shape can drift if the packet layer is not kept explicit.",
+        "affected_domain_ids": [
+          "capacityos"
+        ],
+        "source_refs": [
+          {
+            "object_type": "domain",
+            "id": "capacityos"
+          },
+          {
+            "object_type": "decision-record",
+            "id": "domain-centric-coherence"
+          }
+        ]
+      }
+    ],
+    "escalation_candidates": []
+  },
+  "backlog": {
+    "total_count": 0,
+    "stale_count": 0,
+    "top_items": []
+  },
+  "queue": {
+    "total_count": 0,
+    "human_required_count": 0,
+    "stale_count": 0,
+    "top_items": []
+  },
+  "bundles": {
+    "active_count": 0,
+    "active_items": []
+  },
+  "reviews": {
+    "open_count": 0,
+    "open_items": []
+  },
+  "issues": {
+    "open_count": 0,
+    "high_severity_count": 0,
+    "open_items": []
+  },
+  "human_required": {
+    "count": 0,
+    "items": []
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/indexes/agent-registry.schema.json",
+  "title": "Agent Registry",
+  "type": "object",
+  "required": [
+    "object_type",
+    "id",
+    "generated_at",
+    "entries"
+  ],
+  "properties": {
+    "object_type": {
+      "const": "agent-registry"
+    },
+    "id": {
+      "const": "agent-registry"
+    },
+    "generated_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "agent_id",
+          "agent_type",
+          "scope_type",
+          "scope_ref",
+          "status",
+          "authority_tier",
+          "default_read_surfaces",
+          "default_write_surfaces",
+          "review_profile",
+          "created_at",
+          "updated_at"
+        ],
+        "properties": {
+          "agent_id": {
+            "$ref": "./common.schema.json#/$defs/agent_id"
+          },
+          "agent_type": {
+            "$ref": "./common.schema.json#/$defs/agent_type"
+          },
+          "scope_type": {
+            "$ref": "./common.schema.json#/$defs/scope_type"
+          },
+          "scope_ref": {
+            "$ref": "./common.schema.json#/$defs/non_empty_string"
+          },
+          "status": {
+            "$ref": "./common.schema.json#/$defs/agent_status"
+          },
+          "authority_tier": {
+            "$ref": "./common.schema.json#/$defs/authority_tier"
+          },
+          "default_read_surfaces": {
+            "type": "array",
+            "items": {
+              "$ref": "./common.schema.json#/$defs/surface_id"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "default_write_surfaces": {
+            "type": "array",
+            "items": {
+              "$ref": "./common.schema.json#/$defs/surface_id"
+            },
+            "uniqueItems": true
+          },
+          "review_profile": {
+            "$ref": "./common.schema.json#/$defs/slug"
+          },
+          "created_at": {
+            "$ref": "./common.schema.json#/$defs/timestamp"
+          },
+          "updated_at": {
+            "$ref": "./common.schema.json#/$defs/timestamp"
+          },
+          "supersedes": {
+            "$ref": "./common.schema.json#/$defs/agent_id"
+          },
+          "superseded_by": {
+            "$ref": "./common.schema.json#/$defs/agent_id"
+          },
+          "notes": {
+            "$ref": "./common.schema.json#/$defs/non_empty_string"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "scope_type": {
+                  "const": "system"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "scope_ref": {
+                  "$ref": "./common.schema.json#/$defs/slug"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "scope_type": {
+                  "const": "domain"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "scope_ref": {
+                  "$ref": "./common.schema.json#/$defs/slug"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "scope_type": {
+                  "const": "bundle"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "scope_ref": {
+                  "type": "string",
+                  "pattern": "^bundle-[a-z0-9][a-z0-9-]*$"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "scope_type": {
+                  "const": "review-package"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "scope_ref": {
+                  "type": "string",
+                  "pattern": "^review-[a-z0-9][a-z0-9-]*$"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "scope_type": {
+                  "const": "queue-item"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "scope_ref": {
+                  "type": "string",
+                  "pattern": "^queue-[a-z0-9][a-z0-9-]*$"
+                }
+              }
+            }
+          }
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

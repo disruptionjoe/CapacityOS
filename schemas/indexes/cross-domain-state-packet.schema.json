@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/indexes/cross-domain-state-packet.schema.json",
+  "title": "Cross-Domain State Packet",
+  "type": "object",
+  "required": [
+    "object_type",
+    "id",
+    "generated_at",
+    "system_domain_ref",
+    "domain_overview",
+    "top_work",
+    "reviews",
+    "human_required",
+    "cross_domain_risks",
+    "health_indicators"
+  ],
+  "properties": {
+    "object_type": {
+      "const": "cross-domain-state-packet"
+    },
+    "id": {
+      "const": "cross-domain-state-packet"
+    },
+    "generated_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "system_domain_ref": {
+      "$ref": "./common.schema.json#/$defs/domain_ref"
+    },
+    "domain_registry_ref": {
+      "$ref": "./common.schema.json#/$defs/domain_registry_ref"
+    },
+    "agent_registry_ref": {
+      "$ref": "./common.schema.json#/$defs/agent_registry_ref"
+    },
+    "domain_overview": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "domain_id",
+          "class",
+          "status",
+          "summary",
+          "active_goal_refs",
+          "queue_count",
+          "human_required_count",
+          "stale_count"
+        ],
+        "properties": {
+          "domain_id": {
+            "$ref": "./common.schema.json#/$defs/slug"
+          },
+          "class": {
+            "$ref": "./common.schema.json#/$defs/slug"
+          },
+          "status": {
+            "$ref": "./common.schema.json#/$defs/domain_status"
+          },
+          "summary": {
+            "$ref": "./common.schema.json#/$defs/non_empty_string"
+          },
+          "active_goal_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "./common.schema.json#/$defs/goal_id"
+            },
+            "uniqueItems": true
+          },
+          "queue_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "human_required_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "stale_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "state_packet_ref": {
+            "$ref": "./common.schema.json#/$defs/domain_state_packet_ref"
+          },
+          "top_queue_refs": {
+            "type": "array",
+            "items": {
+              "$ref": "./common.schema.json#/$defs/queue_ref"
+            },
+            "uniqueItems": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "top_work": {
+      "type": "array",
+      "items": {
+        "$ref": "./common.schema.json#/$defs/work_item_summary"
+      }
+    },
+    "reviews": {
+      "type": "object",
+      "required": [
+        "open_count",
+        "open_items"
+      ],
+      "properties": {
+        "open_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "open_items": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/review_summary"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "human_required": {
+      "type": "object",
+      "required": [
+        "count",
+        "items"
+      ],
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/work_item_summary"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "cross_domain_risks": {
+      "type": "array",
+      "items": {
+        "$ref": "./common.schema.json#/$defs/risk_summary"
+      }
+    },
+    "health_indicators": {
+      "type": "array",
+      "items": {
+        "$ref": "./common.schema.json#/$defs/health_indicator"
+      }
+    }
+  },
+  "additionalProperties": false
+}

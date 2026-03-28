@@ -1,0 +1,56 @@
+{
+  "object_type": "domain-registry",
+  "id": "domain-registry",
+  "generated_at": "2026-03-27T18:45:00Z",
+  "entries": [
+    {
+      "domain_id": "capacityos",
+      "name": "CapacityOS",
+      "class": "system-governance",
+      "status": "active",
+      "domain_ref": {
+        "object_type": "domain",
+        "id": "capacityos"
+      },
+      "review_profile": "system-governance-default",
+      "starter_pack_ids": [
+        "starter"
+      ],
+      "key_goal_refs": [
+        "S4-1",
+        "S4-2",
+        "S4-3"
+      ],
+      "primary_state_packet_ref": {
+        "object_type": "domain-state-packet",
+        "id": "domain-state-capacityos"
+      },
+      "primary_steward_agent_id": "agent-steward-capacityos"
+    },
+    {
+      "domain_id": "harbor-garden",
+      "name": "Harbor Garden",
+      "class": "default",
+      "status": "active",
+      "domain_ref": {
+        "object_type": "domain",
+        "id": "harbor-garden"
+      },
+      "review_profile": "default-domain",
+      "starter_pack_ids": [
+        "starter"
+      ],
+      "key_goal_refs": [
+        "S4-1",
+        "S4-2",
+        "S1-1",
+        "S1-2"
+      ],
+      "primary_state_packet_ref": {
+        "object_type": "domain-state-packet",
+        "id": "domain-state-harbor-garden"
+      },
+      "primary_steward_agent_id": "agent-steward-harbor-garden"
+    }
+  ]
+}

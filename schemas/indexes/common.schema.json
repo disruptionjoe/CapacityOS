@@ -1,0 +1,519 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/indexes/common.schema.json",
+  "title": "CapacityOS Index Shared Definitions",
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "goal_id": {
+      "type": "string",
+      "pattern": "^S[145]-[A-Za-z0-9][A-Za-z0-9-]*$"
+    },
+    "agent_id": {
+      "type": "string",
+      "pattern": "^agent-[a-z0-9][a-z0-9-]*$"
+    },
+    "domain_status": {
+      "enum": [
+        "active",
+        "latent"
+      ]
+    },
+    "agent_type": {
+      "enum": [
+        "chief-of-staff",
+        "domain-steward",
+        "ephemeral-worker",
+        "reviewer",
+        "specialist"
+      ]
+    },
+    "agent_status": {
+      "enum": [
+        "active",
+        "paused",
+        "retired",
+        "shadow"
+      ]
+    },
+    "authority_tier": {
+      "enum": [
+        "observe-only",
+        "prepare-only",
+        "runtime-within-scope",
+        "promotion-within-scope",
+        "governance-draft"
+      ]
+    },
+    "scope_type": {
+      "enum": [
+        "system",
+        "domain",
+        "bundle",
+        "review-package",
+        "queue-item"
+      ]
+    },
+    "surface_id": {
+      "enum": [
+        "engine-policy",
+        "domain-canon",
+        "decision-records",
+        "runtime-intake",
+        "runtime-triage",
+        "runtime-backlog",
+        "runtime-queue",
+        "runtime-bundles",
+        "runtime-reviews",
+        "runtime-issues",
+        "runtime-artifacts",
+        "runtime-runs",
+        "runtime-indexes",
+        "index-domain-registry",
+        "index-agent-registry",
+        "index-domain-state-packet",
+        "index-cross-domain-state-packet"
+      ]
+    },
+    "review_level": {
+      "enum": [
+        "system-2",
+        "system-3",
+        "system-4",
+        "system-5"
+      ]
+    },
+    "human_review_state": {
+      "enum": [
+        "not-required",
+        "pending",
+        "approved",
+        "rejected"
+      ]
+    },
+    "freshness_state": {
+      "enum": [
+        "unchecked",
+        "fresh",
+        "pause-for-retriage",
+        "superseded",
+        "escalate-to-human"
+      ]
+    },
+    "endorsement_state": {
+      "enum": [
+        "unreviewed",
+        "agent-suggested",
+        "human-triaged",
+        "human-approved"
+      ]
+    },
+    "execution_mode": {
+      "enum": [
+        "agent",
+        "human",
+        "hybrid"
+      ]
+    },
+    "health_indicator_id": {
+      "enum": [
+        "queue-freshness-rate",
+        "false-positive-promotion-rate",
+        "backlog-to-queue-conversion-rate",
+        "issue-recurrence-rate",
+        "stale-domain-count",
+        "human-review-burden",
+        "draft-to-consequence-ratio",
+        "canon-runtime-leakage-rate"
+      ]
+    },
+    "health_status": {
+      "enum": [
+        "healthy",
+        "watch",
+        "alert"
+      ]
+    },
+    "typed_ref": {
+      "type": "object",
+      "required": [
+        "object_type",
+        "id"
+      ],
+      "properties": {
+        "object_type": {
+          "enum": [
+            "domain",
+            "decision-record",
+            "intake-receipt",
+            "triage-proposal",
+            "backlog-item",
+            "queue-item",
+            "bundle",
+            "review-package",
+            "issue",
+            "artifact",
+            "run-event",
+            "domain-state-packet",
+            "cross-domain-state-packet",
+            "agent-registry",
+            "domain-registry"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/slug"
+        }
+      },
+      "additionalProperties": false
+    },
+    "domain_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "domain"
+            }
+          }
+        }
+      ]
+    },
+    "decision_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "decision-record"
+            }
+          }
+        }
+      ]
+    },
+    "queue_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "queue-item"
+            }
+          }
+        }
+      ]
+    },
+    "bundle_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "bundle"
+            }
+          }
+        }
+      ]
+    },
+    "review_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "review-package"
+            }
+          }
+        }
+      ]
+    },
+    "domain_state_packet_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "domain-state-packet"
+            }
+          }
+        }
+      ]
+    },
+    "cross_domain_state_packet_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "cross-domain-state-packet"
+            }
+          }
+        }
+      ]
+    },
+    "agent_registry_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "agent-registry"
+            }
+          }
+        }
+      ]
+    },
+    "domain_registry_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "domain-registry"
+            }
+          }
+        }
+      ]
+    },
+    "work_item_summary": {
+      "type": "object",
+      "required": [
+        "ref",
+        "title",
+        "status",
+        "summary"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/typed_ref"
+        },
+        "title": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "status": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "domain_id": {
+          "$ref": "#/$defs/slug"
+        },
+        "goal_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/goal_id"
+          },
+          "uniqueItems": true
+        },
+        "execution_mode": {
+          "$ref": "#/$defs/execution_mode"
+        },
+        "endorsement_state": {
+          "$ref": "#/$defs/endorsement_state"
+        },
+        "freshness_status": {
+          "$ref": "#/$defs/freshness_state"
+        },
+        "human_required": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "bundle_summary": {
+      "type": "object",
+      "required": [
+        "ref",
+        "status",
+        "summary",
+        "member_queue_refs"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/bundle_ref"
+        },
+        "status": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "member_queue_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/queue_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "shared_consequence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/slug"
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "review_summary": {
+      "type": "object",
+      "required": [
+        "ref",
+        "review_level",
+        "status",
+        "summary"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/review_ref"
+        },
+        "review_level": {
+          "$ref": "#/$defs/review_level"
+        },
+        "status": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "domain_id": {
+          "$ref": "#/$defs/slug"
+        },
+        "human_decision_state": {
+          "$ref": "#/$defs/human_review_state"
+        },
+        "recommended_action_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "issue_summary": {
+      "type": "object",
+      "required": [
+        "ref",
+        "severity",
+        "status",
+        "summary"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/typed_ref"
+        },
+        "severity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9
+        },
+        "status": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "risk_summary": {
+      "type": "object",
+      "required": [
+        "summary",
+        "affected_domain_ids",
+        "source_refs"
+      ],
+      "properties": {
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "affected_domain_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/slug"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/typed_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "health_indicator": {
+      "type": "object",
+      "required": [
+        "indicator_id",
+        "status",
+        "summary",
+        "current_value"
+      ],
+      "properties": {
+        "indicator_id": {
+          "$ref": "#/$defs/health_indicator_id"
+        },
+        "status": {
+          "$ref": "#/$defs/health_status"
+        },
+        "summary": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "current_value": {
+          "oneOf": [
+            {
+              "type": "number"
+            },
+            {
+              "$ref": "#/$defs/non_empty_string"
+            }
+          ]
+        },
+        "unit": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "basis": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

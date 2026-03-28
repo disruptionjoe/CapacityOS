@@ -1,0 +1,125 @@
+{
+  "object_type": "agent-registry",
+  "id": "agent-registry",
+  "generated_at": "2026-03-27T18:46:00Z",
+  "entries": [
+    {
+      "agent_id": "agent-cos-capacityos",
+      "agent_type": "chief-of-staff",
+      "scope_type": "system",
+      "scope_ref": "capacityos",
+      "status": "active",
+      "authority_tier": "governance-draft",
+      "default_read_surfaces": [
+        "engine-policy",
+        "domain-canon",
+        "decision-records",
+        "runtime-indexes",
+        "index-domain-registry",
+        "index-agent-registry",
+        "index-domain-state-packet",
+        "index-cross-domain-state-packet"
+      ],
+      "default_write_surfaces": [
+        "runtime-backlog",
+        "runtime-reviews",
+        "runtime-issues",
+        "index-agent-registry"
+      ],
+      "review_profile": "cross-domain-governance",
+      "created_at": "2026-03-27T18:00:00Z",
+      "updated_at": "2026-03-27T18:46:00Z"
+    },
+    {
+      "agent_id": "agent-steward-capacityos",
+      "agent_type": "domain-steward",
+      "scope_type": "domain",
+      "scope_ref": "capacityos",
+      "status": "active",
+      "authority_tier": "promotion-within-scope",
+      "default_read_surfaces": [
+        "engine-policy",
+        "domain-canon",
+        "decision-records",
+        "runtime-intake",
+        "runtime-triage",
+        "runtime-backlog",
+        "runtime-queue",
+        "runtime-bundles",
+        "runtime-reviews",
+        "runtime-issues",
+        "runtime-artifacts",
+        "runtime-runs",
+        "runtime-indexes",
+        "index-domain-state-packet"
+      ],
+      "default_write_surfaces": [
+        "runtime-backlog",
+        "runtime-queue",
+        "runtime-bundles",
+        "runtime-reviews",
+        "runtime-issues"
+      ],
+      "review_profile": "system-governance-default",
+      "created_at": "2026-03-27T18:00:00Z",
+      "updated_at": "2026-03-27T18:46:00Z"
+    },
+    {
+      "agent_id": "agent-steward-harbor-garden",
+      "agent_type": "domain-steward",
+      "scope_type": "domain",
+      "scope_ref": "harbor-garden",
+      "status": "active",
+      "authority_tier": "promotion-within-scope",
+      "default_read_surfaces": [
+        "engine-policy",
+        "domain-canon",
+        "decision-records",
+        "runtime-intake",
+        "runtime-triage",
+        "runtime-backlog",
+        "runtime-queue",
+        "runtime-bundles",
+        "runtime-reviews",
+        "runtime-issues",
+        "runtime-artifacts",
+        "runtime-runs",
+        "runtime-indexes",
+        "index-domain-state-packet"
+      ],
+      "default_write_surfaces": [
+        "runtime-backlog",
+        "runtime-queue",
+        "runtime-bundles",
+        "runtime-reviews",
+        "runtime-issues"
+      ],
+      "review_profile": "default-domain",
+      "created_at": "2026-03-27T18:00:00Z",
+      "updated_at": "2026-03-27T18:46:00Z"
+    },
+    {
+      "agent_id": "agent-worker-harbor-signage-draft",
+      "agent_type": "ephemeral-worker",
+      "scope_type": "queue-item",
+      "scope_ref": "queue-harbor-spring-signage",
+      "status": "shadow",
+      "authority_tier": "prepare-only",
+      "default_read_surfaces": [
+        "engine-policy",
+        "domain-canon",
+        "decision-records",
+        "runtime-queue",
+        "runtime-artifacts",
+        "index-domain-state-packet"
+      ],
+      "default_write_surfaces": [
+        "runtime-artifacts"
+      ],
+      "review_profile": "copy-draft",
+      "created_at": "2026-03-27T18:10:00Z",
+      "updated_at": "2026-03-27T18:46:00Z",
+      "notes": "Example scoped worker used to draft signage artifacts without promotion or physical-world authority."
+    }
+  ]
+}

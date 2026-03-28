@@ -42,13 +42,15 @@ intake-to-queue path.
 
 Primary references:
 
+- `examples/indexes/`
 - `examples/runtime/harbor-garden/`
 
 ## How To Read This
 
 - the engine defines the rules and structures
 - the pack defines what gets bundled together for a fresh start
-- the examples provide the concrete publishable assets
+- the examples provide the concrete publishable assets, including compact
+  "hot memory" packets
 - the real private installation still lives under `local/`
 
 ## Near-Term Direction

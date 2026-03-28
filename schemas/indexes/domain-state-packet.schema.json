@@ -1,0 +1,257 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/indexes/domain-state-packet.schema.json",
+  "title": "Domain State Packet",
+  "type": "object",
+  "required": [
+    "object_type",
+    "id",
+    "generated_at",
+    "domain_id",
+    "domain_ref",
+    "canon_snapshot",
+    "focus",
+    "backlog",
+    "queue",
+    "bundles",
+    "reviews",
+    "issues",
+    "human_required"
+  ],
+  "properties": {
+    "object_type": {
+      "const": "domain-state-packet"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^domain-state-[a-z0-9][a-z0-9-]*$"
+    },
+    "generated_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "domain_id": {
+      "$ref": "./common.schema.json#/$defs/slug"
+    },
+    "domain_ref": {
+      "$ref": "./common.schema.json#/$defs/domain_ref"
+    },
+    "canon_snapshot": {
+      "type": "object",
+      "required": [
+        "class",
+        "status",
+        "purpose_statement",
+        "key_goal_refs",
+        "key_decision_refs"
+      ],
+      "properties": {
+        "class": {
+          "$ref": "./common.schema.json#/$defs/slug"
+        },
+        "status": {
+          "$ref": "./common.schema.json#/$defs/domain_status"
+        },
+        "purpose_statement": {
+          "$ref": "./common.schema.json#/$defs/non_empty_string"
+        },
+        "key_goal_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/goal_id"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "key_decision_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/decision_ref"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "focus": {
+      "type": "object",
+      "required": [
+        "active_goal_refs",
+        "active_assumptions",
+        "active_risks",
+        "escalation_candidates"
+      ],
+      "properties": {
+        "active_goal_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/goal_id"
+          },
+          "uniqueItems": true
+        },
+        "active_assumptions": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/non_empty_string"
+          },
+          "uniqueItems": true
+        },
+        "active_risks": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/risk_summary"
+          }
+        },
+        "escalation_candidates": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/typed_ref"
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "backlog": {
+      "type": "object",
+      "required": [
+        "total_count",
+        "stale_count",
+        "top_items"
+      ],
+      "properties": {
+        "total_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stale_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "top_items": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/work_item_summary"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "queue": {
+      "type": "object",
+      "required": [
+        "total_count",
+        "human_required_count",
+        "stale_count",
+        "top_items"
+      ],
+      "properties": {
+        "total_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "human_required_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stale_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "top_items": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/work_item_summary"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "bundles": {
+      "type": "object",
+      "required": [
+        "active_count",
+        "active_items"
+      ],
+      "properties": {
+        "active_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "active_items": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/bundle_summary"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "reviews": {
+      "type": "object",
+      "required": [
+        "open_count",
+        "open_items"
+      ],
+      "properties": {
+        "open_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "open_items": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/review_summary"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "issues": {
+      "type": "object",
+      "required": [
+        "open_count",
+        "high_severity_count",
+        "open_items"
+      ],
+      "properties": {
+        "open_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "high_severity_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "open_items": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/issue_summary"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "human_required": {
+      "type": "object",
+      "required": [
+        "count",
+        "items"
+      ],
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "./common.schema.json#/$defs/work_item_summary"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

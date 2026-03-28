@@ -305,7 +305,9 @@ Recommended new schema groups:
 ### Index schemas
 
 - `schemas/indexes/domain-registry.schema.json`
-- `schemas/indexes/runtime-state-packet.schema.json`
+- `schemas/indexes/agent-registry.schema.json`
+- `schemas/indexes/domain-state-packet.schema.json`
+- `schemas/indexes/cross-domain-state-packet.schema.json`
 - `schemas/indexes/daily-operating-view-input.schema.json`
 
 ### Validation rules
@@ -384,7 +386,7 @@ These ideas are good, but not the next bottleneck:
 
 - manifests as a full retrieval layer
 - context ladders
-- state packets as a mature memory layer
+- a heavy retrieval or memory stack beyond compact compiled state packets
 - replayable sessions
 - operator modes
 - promotion engine

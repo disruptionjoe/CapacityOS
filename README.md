@@ -106,12 +106,12 @@ In this workspace that means:
 
 - `architecture-lock/` - the locked operating model and repo-shape rules
 - `docs/` - implementation contracts and recommendation docs
-- `schemas/` - canonical runtime schemas
+- `schemas/` - canonical runtime and index schemas
 - `scripts/` - deterministic tooling and validators
 - `templates/` - canonical engine assets such as domain and decision templates
 - `packs/` - curated starter-pack definitions and modular composition guidance
-- `examples/` - publishable reference domains, decisions, and sample runtime
-  artifacts
+- `examples/` - publishable reference domains, decisions, runtime artifacts,
+  and compiled index packets
 - `workbench/` - plan and migration-specific material that supports design or
   cutover work
 - `local/` - ignored private canon, runtime, and colocated workspaces
@@ -165,6 +165,7 @@ See:
 - `packs/starter/`
 - `examples/domains/`
 - `examples/decisions/`
+- `examples/indexes/`
 - `examples/runtime/`
 
 The real private system should continue to run from ignored local layers rather

@@ -1,0 +1,157 @@
+{
+  "object_type": "cross-domain-state-packet",
+  "id": "cross-domain-state-packet",
+  "generated_at": "2026-03-27T18:49:00Z",
+  "system_domain_ref": {
+    "object_type": "domain",
+    "id": "capacityos"
+  },
+  "domain_registry_ref": {
+    "object_type": "domain-registry",
+    "id": "domain-registry"
+  },
+  "agent_registry_ref": {
+    "object_type": "agent-registry",
+    "id": "agent-registry"
+  },
+  "domain_overview": [
+    {
+      "domain_id": "capacityos",
+      "class": "system-governance",
+      "status": "active",
+      "summary": "System-governance domain that owns engine design direction, boundary enforcement, and cross-domain review posture.",
+      "active_goal_refs": [
+        "S4-1",
+        "S4-2"
+      ],
+      "queue_count": 0,
+      "human_required_count": 0,
+      "stale_count": 0,
+      "state_packet_ref": {
+        "object_type": "domain-state-packet",
+        "id": "domain-state-capacityos"
+      }
+    },
+    {
+      "domain_id": "harbor-garden",
+      "class": "default",
+      "status": "active",
+      "summary": "Sample normal domain showing a small real event package flowing from intake through queue and bundle formation.",
+      "active_goal_refs": [
+        "S1-1",
+        "S1-2"
+      ],
+      "queue_count": 2,
+      "human_required_count": 0,
+      "stale_count": 0,
+      "state_packet_ref": {
+        "object_type": "domain-state-packet",
+        "id": "domain-state-harbor-garden"
+      },
+      "top_queue_refs": [
+        {
+          "object_type": "queue-item",
+          "id": "queue-harbor-volunteer-day-kit"
+        },
+        {
+          "object_type": "queue-item",
+          "id": "queue-harbor-spring-signage"
+        }
+      ]
+    }
+  ],
+  "top_work": [
+    {
+      "ref": {
+        "object_type": "queue-item",
+        "id": "queue-harbor-volunteer-day-kit"
+      },
+      "title": "Prepare the volunteer-day kit",
+      "status": "queued",
+      "summary": "Hybrid event-package work preparing the volunteer brief, supply list, and materials for the next volunteer day.",
+      "domain_id": "harbor-garden",
+      "goal_refs": [
+        "S1-1"
+      ],
+      "execution_mode": "hybrid",
+      "freshness_status": "fresh",
+      "human_required": false
+    },
+    {
+      "ref": {
+        "object_type": "queue-item",
+        "id": "queue-harbor-spring-signage"
+      },
+      "title": "Draft spring signage",
+      "status": "queued",
+      "summary": "Agent-preparable signage draft that stays coordinated with the same volunteer-day consequence path.",
+      "domain_id": "harbor-garden",
+      "goal_refs": [
+        "S1-2"
+      ],
+      "execution_mode": "agent",
+      "freshness_status": "fresh",
+      "human_required": false
+    }
+  ],
+  "reviews": {
+    "open_count": 0,
+    "open_items": []
+  },
+  "human_required": {
+    "count": 0,
+    "items": []
+  },
+  "cross_domain_risks": [
+    {
+      "summary": "The starter pack currently demonstrates one normal active runtime slice, so cross-domain packet assumptions should stay modest until more domains are exercised.",
+      "affected_domain_ids": [
+        "capacityos",
+        "harbor-garden"
+      ],
+      "source_refs": [
+        {
+          "object_type": "domain-state-packet",
+          "id": "domain-state-capacityos"
+        },
+        {
+          "object_type": "domain-state-packet",
+          "id": "domain-state-harbor-garden"
+        }
+      ]
+    }
+  ],
+  "health_indicators": [
+    {
+      "indicator_id": "queue-freshness-rate",
+      "status": "healthy",
+      "summary": "All starter-pack queue items have explicit freshness checks.",
+      "current_value": 1,
+      "unit": "ratio",
+      "basis": [
+        "2 of 2 queue items show freshness status fresh."
+      ]
+    },
+    {
+      "indicator_id": "stale-domain-count",
+      "status": "healthy",
+      "summary": "No sample domains are marked stale in the starter pack.",
+      "current_value": 0,
+      "unit": "count"
+    },
+    {
+      "indicator_id": "human-review-burden",
+      "status": "healthy",
+      "summary": "The starter pack currently has no queued human review load.",
+      "current_value": 0,
+      "unit": "items"
+    },
+    {
+      "indicator_id": "canon-runtime-leakage-rate",
+      "status": "healthy",
+      "summary": "The packet examples keep canon summaries and runtime summaries separate rather than embedding live private state in domain files.",
+      "current_value": 0,
+      "unit": "count"
+    }
+  ]
+}

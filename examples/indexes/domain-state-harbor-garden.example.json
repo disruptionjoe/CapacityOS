@@ -1,0 +1,187 @@
+{
+  "object_type": "domain-state-packet",
+  "id": "domain-state-harbor-garden",
+  "generated_at": "2026-03-27T18:48:00Z",
+  "domain_id": "harbor-garden",
+  "domain_ref": {
+    "object_type": "domain",
+    "id": "harbor-garden"
+  },
+  "canon_snapshot": {
+    "class": "default",
+    "status": "active",
+    "purpose_statement": "Run a small neighborhood garden that coordinates volunteers, planting days, and simple public communication without letting operations become chaotic or unsafe.",
+    "key_goal_refs": [
+      "S4-1",
+      "S4-2",
+      "S1-1",
+      "S1-2"
+    ],
+    "key_decision_refs": [
+      {
+        "object_type": "decision-record",
+        "id": "safety-over-speed"
+      },
+      {
+        "object_type": "decision-record",
+        "id": "events-are-the-operating-unit"
+      },
+      {
+        "object_type": "decision-record",
+        "id": "human-does-physical-consequence"
+      }
+    ]
+  },
+  "focus": {
+    "active_goal_refs": [
+      "S1-1",
+      "S1-2"
+    ],
+    "active_assumptions": [
+      "The volunteer day is still expected to happen this weekend.",
+      "Physical-world execution still requires human approval."
+    ],
+    "active_risks": [
+      {
+        "summary": "The event package should pause if timing or safety assumptions change before print or posting steps.",
+        "affected_domain_ids": [
+          "harbor-garden"
+        ],
+        "source_refs": [
+          {
+            "object_type": "queue-item",
+            "id": "queue-harbor-volunteer-day-kit"
+          },
+          {
+            "object_type": "decision-record",
+            "id": "safety-over-speed"
+          }
+        ]
+      }
+    ],
+    "escalation_candidates": [
+      {
+        "object_type": "queue-item",
+        "id": "queue-harbor-volunteer-day-kit"
+      },
+      {
+        "object_type": "bundle",
+        "id": "bundle-harbor-volunteer-day-prep"
+      }
+    ]
+  },
+  "backlog": {
+    "total_count": 2,
+    "stale_count": 0,
+    "top_items": [
+      {
+        "ref": {
+          "object_type": "backlog-item",
+          "id": "backlog-harbor-volunteer-day-kit"
+        },
+        "title": "Prepare the volunteer-day kit",
+        "status": "active",
+        "summary": "Prepare the core volunteer-day package so the next event can run clearly and safely.",
+        "domain_id": "harbor-garden",
+        "goal_refs": [
+          "S1-1"
+        ],
+        "endorsement_state": "human-triaged",
+        "human_required": false
+      },
+      {
+        "ref": {
+          "object_type": "backlog-item",
+          "id": "backlog-harbor-spring-signage"
+        },
+        "title": "Draft spring signage",
+        "status": "active",
+        "summary": "Create simple signage that helps volunteers and neighbors understand the next event and garden rules.",
+        "domain_id": "harbor-garden",
+        "goal_refs": [
+          "S1-2"
+        ],
+        "endorsement_state": "human-triaged",
+        "human_required": false
+      }
+    ]
+  },
+  "queue": {
+    "total_count": 2,
+    "human_required_count": 0,
+    "stale_count": 0,
+    "top_items": [
+      {
+        "ref": {
+          "object_type": "queue-item",
+          "id": "queue-harbor-volunteer-day-kit"
+        },
+        "title": "Prepare the volunteer-day kit",
+        "status": "queued",
+        "summary": "Hybrid queue item for preparing the volunteer brief, supply list, and related package materials.",
+        "domain_id": "harbor-garden",
+        "goal_refs": [
+          "S1-1"
+        ],
+        "execution_mode": "hybrid",
+        "freshness_status": "fresh",
+        "human_required": false
+      },
+      {
+        "ref": {
+          "object_type": "queue-item",
+          "id": "queue-harbor-spring-signage"
+        },
+        "title": "Draft spring signage",
+        "status": "queued",
+        "summary": "Agent-preparable signage draft that stays aligned with the volunteer-day package.",
+        "domain_id": "harbor-garden",
+        "goal_refs": [
+          "S1-2"
+        ],
+        "execution_mode": "agent",
+        "freshness_status": "fresh",
+        "human_required": false
+      }
+    ]
+  },
+  "bundles": {
+    "active_count": 1,
+    "active_items": [
+      {
+        "ref": {
+          "object_type": "bundle",
+          "id": "bundle-harbor-volunteer-day-prep"
+        },
+        "status": "ready",
+        "summary": "Volunteer-day prep bundle that keeps the brief and signage package coordinated before consequence steps.",
+        "member_queue_refs": [
+          {
+            "object_type": "queue-item",
+            "id": "queue-harbor-volunteer-day-kit"
+          },
+          {
+            "object_type": "queue-item",
+            "id": "queue-harbor-spring-signage"
+          }
+        ],
+        "shared_consequence_refs": [
+          "volunteer-day-2026-03-29"
+        ]
+      }
+    ]
+  },
+  "reviews": {
+    "open_count": 0,
+    "open_items": []
+  },
+  "issues": {
+    "open_count": 0,
+    "high_severity_count": 0,
+    "open_items": []
+  },
+  "human_required": {
+    "count": 0,
+    "items": []
+  }
+}
