@@ -282,7 +282,7 @@ CapacityOS/
 
 ## Files To Revisit Next
 
-- `00-plan.md`
+- `workbench/00-plan.md`
 - `architecture-lock/01-principles.md`
 - `architecture-lock/03-folder-structure.md`
 - `architecture-lock/04-entity-model.md`

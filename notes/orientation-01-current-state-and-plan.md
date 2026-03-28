@@ -30,7 +30,7 @@ What is not done yet:
 The main orientation files right now are:
 
 - [LOCK.md](/C:/Users/joe/OneDrive/CapacityOS/architecture-lock/LOCK.md)
-- [00-plan.md](/C:/Users/joe/OneDrive/CapacityOS/00-plan.md)
+- [00-plan.md](/C:/Users/joe/OneDrive/CapacityOS/workbench/00-plan.md)
 - [greenfield-pilot.md](/C:/Users/joe/OneDrive/CapacityOS/docs/greenfield-pilot.md)
 
 ## What The Plan Looks Like From Here
