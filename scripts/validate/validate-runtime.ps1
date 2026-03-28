@@ -6,7 +6,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $WorkspaceRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-$SupportedObjectTypes = @("intake-receipt", "triage-proposal", "backlog-item", "queue-item", "bundle", "review-package", "artifact", "run-event")
+$SupportedObjectTypes = @("intake-receipt", "triage-proposal", "backlog-item", "queue-item", "bundle", "review-package", "artifact", "issue", "run-event")
 
 function Add-Issue {
   param($List, [string]$Path, [string]$Message)
@@ -70,6 +70,15 @@ function Req-Str {
   $value = GetVal $Object $Name
   if (-not (IsStr $value)) { Add-Issue $Issues $Path ("field '{0}' must be a non-empty string" -f $Name); return $null }
   return $value
+}
+
+function Req-IntRange {
+  param($Object, [string]$Name, [int]$Minimum, [int]$Maximum, [string]$Path, $Issues)
+  if (-not (HasP $Object $Name)) { Add-Issue $Issues $Path ("missing required field '{0}'" -f $Name); return $null }
+  $value = GetVal $Object $Name
+  if ($value -isnot [int] -and $value -isnot [long]) { Add-Issue $Issues $Path ("field '{0}' must be an integer" -f $Name); return $null }
+  if ($value -lt $Minimum -or $value -gt $Maximum) { Add-Issue $Issues $Path ("field '{0}' must be between {1} and {2}" -f $Name, $Minimum, $Maximum) }
+  return [int]$value
 }
 
 function Opt-Str {
@@ -379,6 +388,32 @@ foreach ($file in $files) {
         if (-not (($sourceKeys -match '^queue-item:').Count -gt 0) -and -not (($sourceKeys -match '^run-event:').Count -gt 0)) {
           Add-Issue $issues $path "artifacts must preserve direct queue-item or run-event lineage"
         }
+      }
+    }
+    "issue" {
+      $id = Req-Str $object "id" $path $issues; if ($null -ne $id -and $id -notmatch '^issue-[a-z0-9][a-z0-9-]*$') { Add-Issue $issues $path "field 'id' must match the issue id contract" }
+      $domainId = Req-Str $object "domain_id" $path $issues; if ($null -ne $domainId -and -not (IsSlug $domainId)) { Add-Issue $issues $path "field 'domain_id' must be a canonical slug" }
+      Req-IntRange $object "severity" 1 9 $path $issues | Out-Null
+      $issueType = Req-Enum $object "issue_type" @("blocker", "risk", "contradiction") $path $issues
+      $status = Req-Enum $object "status" @("open", "resolved", "superseded") $path $issues
+      Req-Ts $object "created_at" $path $issues | Out-Null
+      $closedAt = Opt-Ts $object "closed_at" $path $issues
+      if (@("resolved", "superseded") -contains $status -and $null -eq $closedAt) { Add-Issue $issues $path "resolved and superseded issues must include 'closed_at'" }
+      Req-Str $object "summary" $path $issues | Out-Null
+      $flowEffect = Req-Enum $object "flow_effect" @("improvement-only", "pause-affected", "escalate-human") $path $issues
+      if (HasP $object "goal_refs") { Validate-StringArray (GetVal $object "goal_refs") "goal_refs" 0 $path $issues "goal" | Out-Null }
+      $lineage = Req-Obj $object "lineage" $path $issues
+      if ($null -ne $lineage) {
+        Validate-RefArray (GetVal $lineage "source_refs") "lineage.source_refs" 1 $path $issues | Out-Null
+      }
+      $affectedKeys = Validate-RefArray (GetVal $object "affected_refs") "affected_refs" 1 $path $issues
+      Validate-CollisionBasis (GetVal $object "impact_basis") $path $issues
+      if ($issueType -eq "blocker" -and $flowEffect -eq "improvement-only") {
+        Add-Issue $issues $path "blocker issues must materially affect flow and cannot use flow_effect = 'improvement-only'"
+      }
+      if ($issueType -eq "contradiction") {
+        if ($flowEffect -eq "improvement-only") { Add-Issue $issues $path "contradiction issues must pause affected work or escalate to the human" }
+        if (@($affectedKeys).Count -lt 2) { Add-Issue $issues $path "contradiction issues must affect at least two refs" }
       }
     }
     "run-event" {
