@@ -265,6 +265,10 @@ Recommended first set:
 
 - `scripts/execution/record-artifact`
 
+### Issues
+
+- `scripts/issues/record-issue`
+
 ### Views
 
 - `scripts/views/build-daily-operating-view`

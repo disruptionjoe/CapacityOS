@@ -512,6 +512,23 @@ foreach ($entry in $entries) {
       }
     }
   }
+  if ($type -eq "issue" -and (GetVal $object "status") -eq "open" -and (GetVal $object "flow_effect") -eq "pause-affected") {
+    foreach ($affectedRef in @(GetVal $object "affected_refs")) {
+      $affected = $registry[(RefKey (GetVal $affectedRef "object_type") (GetVal $affectedRef "id"))]
+      if ($null -eq $affected) { continue }
+      $affectedType = GetVal $affected.Object "object_type"
+      if ($affectedType -eq "queue-item") {
+        if (@("paused", "superseded") -notcontains (GetVal $affected.Object "status")) {
+          Add-Issue $issues $path ("open pause-affected issues must point only to queue items already in paused or superseded state; '{0}' is '{1}'" -f (GetVal $affectedRef "id"), (GetVal $affected.Object "status"))
+        }
+      }
+      if ($affectedType -eq "bundle") {
+        if (@("paused", "superseded") -notcontains (GetVal $affected.Object "status")) {
+          Add-Issue $issues $path ("open pause-affected issues must point only to bundles already in paused or superseded state; '{0}' is '{1}'" -f (GetVal $affectedRef "id"), (GetVal $affected.Object "status"))
+        }
+      }
+    }
+  }
 }
 
 if ($issues.Count -gt 0) {
