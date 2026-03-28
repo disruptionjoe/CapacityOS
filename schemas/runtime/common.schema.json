@@ -56,6 +56,14 @@
         "rejected"
       ]
     },
+    "review_level": {
+      "enum": [
+        "system-2",
+        "system-3",
+        "system-4",
+        "system-5"
+      ]
+    },
     "endorsement_state": {
       "enum": [
         "unreviewed",
@@ -196,6 +204,20 @@
           "properties": {
             "object_type": {
               "const": "bundle"
+            }
+          }
+        }
+      ]
+    },
+    "review_ref": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/typed_ref"
+        },
+        {
+          "properties": {
+            "object_type": {
+              "const": "review-package"
             }
           }
         }

@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/runtime/review-package.schema.json",
+  "title": "Review Package",
+  "type": "object",
+  "required": [
+    "object_type",
+    "id",
+    "review_level",
+    "created_at",
+    "domain_ids",
+    "lineage",
+    "prepared_findings",
+    "recommended_actions",
+    "human_decision_state"
+  ],
+  "properties": {
+    "object_type": {
+      "const": "review-package"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^review-[a-z0-9][a-z0-9-]*$"
+    },
+    "review_level": {
+      "$ref": "./common.schema.json#/$defs/review_level"
+    },
+    "created_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "decided_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "domain_ids": {
+      "type": "array",
+      "items": {
+        "$ref": "./common.schema.json#/$defs/slug"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "lineage": {
+      "type": "object",
+      "required": [
+        "source_refs"
+      ],
+      "properties": {
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "./common.schema.json#/$defs/queue_ref"
+              },
+              {
+                "$ref": "./common.schema.json#/$defs/bundle_ref"
+              },
+              {
+                "$ref": "./common.schema.json#/$defs/artifact_ref"
+              },
+              {
+                "$ref": "./common.schema.json#/$defs/run_ref"
+              }
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "prepared_findings": {
+      "type": "array",
+      "items": {
+        "$ref": "./common.schema.json#/$defs/non_empty_string"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "recommended_actions": {
+      "type": "array",
+      "items": {
+        "$ref": "./common.schema.json#/$defs/non_empty_string"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "human_decision_state": {
+      "$ref": "./common.schema.json#/$defs/human_review_state"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "human_decision_state": {
+            "enum": [
+              "approved",
+              "rejected"
+            ]
+          }
+        },
+        "required": [
+          "human_decision_state"
+        ]
+      },
+      "then": {
+        "required": [
+          "decided_at"
+        ]
+      }
+    }
+  ]
+}

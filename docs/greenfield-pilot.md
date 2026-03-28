@@ -63,7 +63,7 @@ software-like or content-like work.
 ### Runtime
 
 - [daily-operating-view-2026-03-25.md](/C:/Users/joe/OneDrive/CapacityOS/local/runtime/views/daily-operating-view-2026-03-25.md)
-- [review-system3-weekly-2026-03-25.md](/C:/Users/joe/OneDrive/CapacityOS/local/runtime/reviews/review-system3-weekly-2026-03-25.md)
+- [review-system3-weekly-2026-03-25.json](/C:/Users/joe/OneDrive/CapacityOS/local/runtime/reviews/review-system3-weekly-2026-03-25.json)
 
 ## Pass Conditions
 

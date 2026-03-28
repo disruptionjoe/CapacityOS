@@ -6,7 +6,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $WorkspaceRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-$SupportedObjectTypes = @("intake-receipt", "triage-proposal", "backlog-item", "queue-item", "bundle", "run-event")
+$SupportedObjectTypes = @("intake-receipt", "triage-proposal", "backlog-item", "queue-item", "bundle", "review-package", "artifact", "run-event")
 
 function Add-Issue {
   param($List, [string]$Path, [string]$Message)
@@ -346,6 +346,36 @@ foreach ($file in $files) {
         $relationship = Req-Enum $supersession "relationship" @("none", "full-replacement", "partial-replacement", "invalidated-by-new-fact", "pause-pending-retriage") $path $issues
         if (HasP $supersession "by_refs") { Validate-RefArray (GetVal $supersession "by_refs") "supersession.by_refs" 1 $path $issues @("bundle") | Out-Null }
         if (@("full-replacement", "partial-replacement", "invalidated-by-new-fact") -contains $relationship -and -not (HasP $supersession "by_refs")) { Add-Issue $issues $path "replacement bundle supersession relationships must include 'by_refs'" }
+      }
+    }
+    "review-package" {
+      $id = Req-Str $object "id" $path $issues; if ($null -ne $id -and $id -notmatch '^review-[a-z0-9][a-z0-9-]*$') { Add-Issue $issues $path "field 'id' must match the review id contract" }
+      Req-Enum $object "review_level" @("system-2", "system-3", "system-4", "system-5") $path $issues | Out-Null
+      Req-Ts $object "created_at" $path $issues | Out-Null
+      $decidedAt = Opt-Ts $object "decided_at" $path $issues
+      $domainIds = Validate-StringArray (GetVal $object "domain_ids") "domain_ids" 1 $path $issues "slug"
+      $lineage = Req-Obj $object "lineage" $path $issues
+      if ($null -ne $lineage) {
+        Validate-RefArray (GetVal $lineage "source_refs") "lineage.source_refs" 1 $path $issues @("queue-item", "bundle", "artifact", "run-event") | Out-Null
+      }
+      Validate-StringArray (GetVal $object "prepared_findings") "prepared_findings" 1 $path $issues | Out-Null
+      Validate-StringArray (GetVal $object "recommended_actions") "recommended_actions" 1 $path $issues | Out-Null
+      $decisionState = Req-Enum $object "human_decision_state" @("not-required", "pending", "approved", "rejected") $path $issues
+      if (@("approved", "rejected") -contains $decisionState -and $null -eq $decidedAt) { Add-Issue $issues $path "resolved review packages must include 'decided_at'" }
+    }
+    "artifact" {
+      $id = Req-Str $object "id" $path $issues; if ($null -ne $id -and $id -notmatch '^artifact-[a-z0-9][a-z0-9-]*$') { Add-Issue $issues $path "field 'id' must match the artifact id contract" }
+      $domainId = Req-Str $object "domain_id" $path $issues; if ($null -ne $domainId -and -not (IsSlug $domainId)) { Add-Issue $issues $path "field 'domain_id' must be a canonical slug" }
+      $artifactType = Req-Str $object "artifact_type" $path $issues; if ($null -ne $artifactType -and -not (IsSlug $artifactType)) { Add-Issue $issues $path "field 'artifact_type' must be a canonical slug" }
+      Req-Enum $object "status" @("draft", "review_ready", "final", "superseded", "archived") $path $issues | Out-Null
+      Req-Ts $object "created_at" $path $issues | Out-Null
+      Opt-Str $object "summary" $path $issues | Out-Null
+      $lineage = Req-Obj $object "lineage" $path $issues
+      if ($null -ne $lineage) {
+        $sourceKeys = Validate-RefArray (GetVal $lineage "source_refs") "lineage.source_refs" 1 $path $issues @("queue-item", "run-event", "review-package", "artifact")
+        if (-not (($sourceKeys -match '^queue-item:').Count -gt 0) -and -not (($sourceKeys -match '^run-event:').Count -gt 0)) {
+          Add-Issue $issues $path "artifacts must preserve direct queue-item or run-event lineage"
+        }
       }
     }
     "run-event" {

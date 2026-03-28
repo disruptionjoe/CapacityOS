@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "capacityos/runtime/artifact.schema.json",
+  "title": "Artifact",
+  "type": "object",
+  "required": [
+    "object_type",
+    "id",
+    "domain_id",
+    "artifact_type",
+    "status",
+    "created_at",
+    "lineage"
+  ],
+  "properties": {
+    "object_type": {
+      "const": "artifact"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^artifact-[a-z0-9][a-z0-9-]*$"
+    },
+    "domain_id": {
+      "$ref": "./common.schema.json#/$defs/slug"
+    },
+    "artifact_type": {
+      "$ref": "./common.schema.json#/$defs/slug"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "review_ready",
+        "final",
+        "superseded",
+        "archived"
+      ]
+    },
+    "created_at": {
+      "$ref": "./common.schema.json#/$defs/timestamp"
+    },
+    "summary": {
+      "$ref": "./common.schema.json#/$defs/non_empty_string"
+    },
+    "lineage": {
+      "type": "object",
+      "required": [
+        "source_refs"
+      ],
+      "properties": {
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "./common.schema.json#/$defs/queue_ref"
+              },
+              {
+                "$ref": "./common.schema.json#/$defs/run_ref"
+              },
+              {
+                "$ref": "./common.schema.json#/$defs/review_ref"
+              },
+              {
+                "$ref": "./common.schema.json#/$defs/artifact_ref"
+              }
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
